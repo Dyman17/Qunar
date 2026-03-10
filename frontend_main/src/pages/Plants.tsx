@@ -2,7 +2,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { apiGet, apiPatch, apiPost, API_PREFIX } from "@/api/client";
+import { apiDelete, apiGet, apiPatch, apiPost, API_PREFIX } from "@/api/client";
 
 const selectClass = "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm";
 
@@ -128,6 +128,20 @@ const Plants = () => {
     }
   };
 
+  const handleDelete = async (plantId: number) => {
+    setLoading(true);
+    setMessage(null);
+    try {
+      await apiDelete(`${API_PREFIX}/plants/${plantId}`);
+      setMessage("Success: plant deleted");
+      await loadPlants();
+    } catch (err: any) {
+      setMessage(`Error: ${err.message || "Failed to delete plant"}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const farmsById = useMemo(() => Object.fromEntries(farms.map((farm) => [farm.id, farm.name])), [farms]);
 
   return (
@@ -193,8 +207,11 @@ const Plants = () => {
                             <Button variant="outline" size="sm" onClick={() => handleMakeReady(plant.id)}>
                               Make Ready
                             </Button>
-                            <Button size="sm" onClick={() => handleHarvest(plant.id)}>
+                            <Button size="sm" disabled={plant.status !== "ready"} onClick={() => handleHarvest(plant.id)}>
                               Harvest
+                            </Button>
+                            <Button variant="outline" size="sm" onClick={() => handleDelete(plant.id)}>
+                              Delete
                             </Button>
                           </td>
                         </tr>
