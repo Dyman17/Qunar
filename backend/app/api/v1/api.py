@@ -5,6 +5,7 @@ Combines all endpoint routers
 
 from fastapi import APIRouter
 
+from app.api.v1.endpoints import admin as admin_bootstrap
 from app.api.v1.endpoints import auth, users, farms, plants, sensors, logs
 
 api_router = APIRouter()
@@ -26,3 +27,6 @@ api_router.include_router(sensors.router, prefix="/sensors", tags=["Sensors"])
 
 # Activity logs endpoints (admin only)
 api_router.include_router(logs.router, prefix="/logs", tags=["Logs"])
+
+# Admin bootstrap endpoint (one-time)
+api_router.include_router(admin_bootstrap.router, prefix="/admin", tags=["Admin"])

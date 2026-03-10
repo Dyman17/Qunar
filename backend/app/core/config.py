@@ -58,6 +58,9 @@ class Settings(BaseSettings):
     
     # OpenAI
     OPENAI_API_KEY: str = ""
+
+    # Admin bootstrap (one-time secret)
+    ADMIN_BOOTSTRAP_TOKEN: Optional[str] = None
     
     # Email (optional)
     SMTP_TLS: bool = True
