@@ -17,6 +17,14 @@ import {
   Cpu,
   LineChart,
   Truck,
+  Building2,
+  Clock3,
+  ShieldAlert,
+  TrendingUp,
+  Globe2,
+  Leaf,
+  Gamepad2,
+  ArrowRight,
 } from "lucide-react";
 
 const Feature = ({
@@ -79,24 +87,79 @@ const Index = () => (
 
       <section className="py-16 bg-white" id="problem">
         <div className="container">
-          <div className="grid gap-10 lg:grid-cols-2 items-center">
-            <div>
-              <h2 className="text-3xl font-bold mb-4">Why growing food became difficult</h2>
-              <div className="space-y-3 text-muted-foreground">
-                <p>People live in cities and have no land to grow food.</p>
-                <p>Modern life leaves no time for farming.</p>
-                <p>There is little transparency in food production.</p>
+          <div className="grid gap-12 lg:grid-cols-[1.1fr_1fr] items-center">
+            <div className="space-y-6">
+              <div className="inline-flex items-center gap-2 rounded-full bg-emerald-50 text-emerald-700 text-xs px-3 py-1">
+                Problem
+              </div>
+              <h2 className="text-3xl font-bold">Why growing food became difficult</h2>
+              <p className="text-muted-foreground">
+                Cities grew faster than gardens. Time shrank, and transparency disappeared.
+              </p>
+              <div className="grid gap-4">
+                <div className="rounded-2xl bg-card shadow-card p-4 flex gap-4">
+                  <div className="h-11 w-11 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center">
+                    <Building2 className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <div className="font-semibold">No land in cities</div>
+                    <p className="text-sm text-muted-foreground">People live in cities and have no land to grow food.</p>
+                  </div>
+                </div>
+                <div className="rounded-2xl bg-card shadow-card p-4 flex gap-4">
+                  <div className="h-11 w-11 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center">
+                    <Clock3 className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <div className="font-semibold">No time for farming</div>
+                    <p className="text-sm text-muted-foreground">Modern life leaves no time for hands-on care.</p>
+                  </div>
+                </div>
+                <div className="rounded-2xl bg-card shadow-card p-4 flex gap-4">
+                  <div className="h-11 w-11 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center">
+                    <ShieldAlert className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <div className="font-semibold">No transparency</div>
+                    <p className="text-sm text-muted-foreground">Users want to know how their food is produced.</p>
+                  </div>
+                </div>
               </div>
             </div>
             <div className="grid gap-4">
-              <div className="rounded-xl bg-card shadow-card p-4">
-                <p className="text-sm text-muted-foreground">Smart agriculture market is growing fast.</p>
+              <div className="rounded-2xl bg-emerald-600 text-white p-6 shadow-elevated">
+                <div className="text-xs uppercase text-emerald-100">Macro trends</div>
+                <div className="text-lg font-semibold">Three signals prove the timing is right.</div>
               </div>
-              <div className="rounded-xl bg-card shadow-card p-4">
-                <p className="text-sm text-muted-foreground">Urbanization is increasing globally.</p>
-              </div>
-              <div className="rounded-xl bg-card shadow-card p-4">
-                <p className="text-sm text-muted-foreground">Demand for organic, traceable food keeps rising.</p>
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div className="rounded-xl bg-card shadow-card p-4">
+                  <div className="flex items-center gap-2 text-emerald-700 font-semibold">
+                    <TrendingUp className="h-4 w-4" />
+                    Market growth
+                  </div>
+                  <p className="text-sm text-muted-foreground mt-2">Smart agriculture market is growing fast.</p>
+                </div>
+                <div className="rounded-xl bg-card shadow-card p-4">
+                  <div className="flex items-center gap-2 text-emerald-700 font-semibold">
+                    <Globe2 className="h-4 w-4" />
+                    Urbanization
+                  </div>
+                  <p className="text-sm text-muted-foreground mt-2">Urbanization is increasing globally.</p>
+                </div>
+                <div className="rounded-xl bg-card shadow-card p-4">
+                  <div className="flex items-center gap-2 text-emerald-700 font-semibold">
+                    <Leaf className="h-4 w-4" />
+                    Organic demand
+                  </div>
+                  <p className="text-sm text-muted-foreground mt-2">Demand for organic, traceable food keeps rising.</p>
+                </div>
+                <div className="rounded-xl bg-card shadow-card p-4">
+                  <div className="flex items-center gap-2 text-emerald-700 font-semibold">
+                    <BadgeCheck className="h-4 w-4" />
+                    Trust gap
+                  </div>
+                  <p className="text-sm text-muted-foreground mt-2">Consumers want verified data and transparency.</p>
+                </div>
               </div>
             </div>
           </div>
@@ -104,42 +167,139 @@ const Index = () => (
       </section>
 
       <section className="py-16 bg-emerald-50/70" id="solution">
-        <div className="container grid gap-10 lg:grid-cols-2 items-center">
-          <div className="space-y-4">
+        <div className="container grid gap-12 lg:grid-cols-2 items-center">
+          <div className="space-y-6">
+            <div className="inline-flex items-center gap-2 rounded-full bg-white/80 text-emerald-700 text-xs px-3 py-1">
+              Solution
+            </div>
             <h2 className="text-3xl font-bold">Qunar connects the digital world with real farming</h2>
             <p className="text-muted-foreground">
               Users grow real vegetables remotely through a game interface. Every action in the game controls real hardware.
             </p>
+            <div className="rounded-2xl bg-white/80 border border-emerald-100 p-4 text-sm text-muted-foreground">
+              Аренда фермы дает доступ к управлению, а семена и растения покупаются отдельно.
+            </div>
           </div>
-          <div className="grid gap-4">
-            <div className="rounded-xl bg-card shadow-card p-4">1. Plant seeds in the app</div>
-            <div className="rounded-xl bg-card shadow-card p-4">2. Water plants through the game</div>
-            <div className="rounded-xl bg-card shadow-card p-4">3. Sensors monitor the environment</div>
-            <div className="rounded-xl bg-card shadow-card p-4">4. Camera shows plant growth</div>
-            <div className="rounded-xl bg-card shadow-card p-4">5. Harvest delivered to your home</div>
+          <div className="relative">
+            <div className="hidden md:block absolute left-5 top-2 bottom-2 w-px bg-emerald-200" />
+            <div className="space-y-4">
+              <div className="relative flex gap-4">
+                <div className="h-10 w-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-semibold">1</div>
+                <div className="rounded-2xl bg-white shadow-card border border-emerald-100 p-4">
+                  <div className="flex items-center gap-2 text-emerald-700 font-semibold">
+                    <Sprout className="h-4 w-4" />
+                    Plant seeds in the app
+                  </div>
+                  <p className="text-sm text-muted-foreground mt-2">Choose crops and start your remote plot.</p>
+                </div>
+              </div>
+              <div className="relative flex gap-4">
+                <div className="h-10 w-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-semibold">2</div>
+                <div className="rounded-2xl bg-white shadow-card border border-emerald-100 p-4">
+                  <div className="flex items-center gap-2 text-emerald-700 font-semibold">
+                    <Droplets className="h-4 w-4" />
+                    Water plants through the game
+                  </div>
+                  <p className="text-sm text-muted-foreground mt-2">Automations and manual actions sync with hardware.</p>
+                </div>
+              </div>
+              <div className="relative flex gap-4">
+                <div className="h-10 w-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-semibold">3</div>
+                <div className="rounded-2xl bg-white shadow-card border border-emerald-100 p-4">
+                  <div className="flex items-center gap-2 text-emerald-700 font-semibold">
+                    <Activity className="h-4 w-4" />
+                    Sensors monitor the environment
+                  </div>
+                  <p className="text-sm text-muted-foreground mt-2">Soil and climate data stream into your dashboard.</p>
+                </div>
+              </div>
+              <div className="relative flex gap-4">
+                <div className="h-10 w-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-semibold">4</div>
+                <div className="rounded-2xl bg-white shadow-card border border-emerald-100 p-4">
+                  <div className="flex items-center gap-2 text-emerald-700 font-semibold">
+                    <Camera className="h-4 w-4" />
+                    Camera shows plant growth
+                  </div>
+                  <p className="text-sm text-muted-foreground mt-2">Live photos and time-lapses prove progress.</p>
+                </div>
+              </div>
+              <div className="relative flex gap-4">
+                <div className="h-10 w-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-semibold">5</div>
+                <div className="rounded-2xl bg-white shadow-card border border-emerald-100 p-4">
+                  <div className="flex items-center gap-2 text-emerald-700 font-semibold">
+                    <Truck className="h-4 w-4" />
+                    Harvest delivered to your home
+                  </div>
+                  <p className="text-sm text-muted-foreground mt-2">Fresh, traceable produce shipped to you.</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       <section className="py-16 bg-white" id="technology">
         <div className="container">
-          <h2 className="text-3xl font-bold mb-8">How the technology works</h2>
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-8">
+            <h2 className="text-3xl font-bold">How the technology works</h2>
+            <div className="text-sm text-muted-foreground">Hardware, software, and AI in one loop.</div>
+          </div>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            <div className="rounded-xl bg-card shadow-card p-5">
-              <h3 className="font-semibold mb-2">IoT Farm</h3>
-              <p className="text-sm text-muted-foreground">ESP32 sensors, soil moisture, temperature, automated irrigation.</p>
+            <div className="rounded-2xl bg-card shadow-card p-6 border border-emerald-100">
+              <div className="flex items-center gap-2 text-emerald-700 font-semibold">
+                <Cpu className="h-5 w-5" />
+                IoT Farm
+              </div>
+              <p className="text-sm text-muted-foreground mt-3">
+                ESP32 sensors, soil moisture, temperature, automated irrigation.
+              </p>
+              <div className="flex flex-wrap gap-2 mt-4 text-xs text-muted-foreground">
+                <span className="rounded-full bg-emerald-50 px-2 py-1">ESP32</span>
+                <span className="rounded-full bg-emerald-50 px-2 py-1">Moisture</span>
+                <span className="rounded-full bg-emerald-50 px-2 py-1">Irrigation</span>
+              </div>
             </div>
-            <div className="rounded-xl bg-card shadow-card p-5">
-              <h3 className="font-semibold mb-2">Game Platform</h3>
-              <p className="text-sm text-muted-foreground">Unity 3D simulation, notifications, interactive planting.</p>
+            <div className="rounded-2xl bg-card shadow-card p-6 border border-emerald-100">
+              <div className="flex items-center gap-2 text-emerald-700 font-semibold">
+                <Gamepad2 className="h-5 w-5" />
+                Game Platform
+              </div>
+              <p className="text-sm text-muted-foreground mt-3">
+                Unity 3D simulation, notifications, interactive planting.
+              </p>
+              <div className="flex flex-wrap gap-2 mt-4 text-xs text-muted-foreground">
+                <span className="rounded-full bg-emerald-50 px-2 py-1">Unity 3D</span>
+                <span className="rounded-full bg-emerald-50 px-2 py-1">Gameplay</span>
+                <span className="rounded-full bg-emerald-50 px-2 py-1">Alerts</span>
+              </div>
             </div>
-            <div className="rounded-xl bg-card shadow-card p-5">
-              <h3 className="font-semibold mb-2">AI Assistant</h3>
-              <p className="text-sm text-muted-foreground">Plant care advice, tips, and gamified NPC guidance.</p>
+            <div className="rounded-2xl bg-card shadow-card p-6 border border-emerald-100">
+              <div className="flex items-center gap-2 text-emerald-700 font-semibold">
+                <Bot className="h-5 w-5" />
+                AI Assistant
+              </div>
+              <p className="text-sm text-muted-foreground mt-3">
+                Plant care advice, tips, and gamified NPC guidance.
+              </p>
+              <div className="flex flex-wrap gap-2 mt-4 text-xs text-muted-foreground">
+                <span className="rounded-full bg-emerald-50 px-2 py-1">Recommendations</span>
+                <span className="rounded-full bg-emerald-50 px-2 py-1">Forecasts</span>
+                <span className="rounded-full bg-emerald-50 px-2 py-1">Guidance</span>
+              </div>
             </div>
-            <div className="rounded-xl bg-card shadow-card p-5">
-              <h3 className="font-semibold mb-2">Live Monitoring</h3>
-              <p className="text-sm text-muted-foreground">Camera stream, growth photos, sensor charts.</p>
+            <div className="rounded-2xl bg-card shadow-card p-6 border border-emerald-100">
+              <div className="flex items-center gap-2 text-emerald-700 font-semibold">
+                <Camera className="h-5 w-5" />
+                Live Monitoring
+              </div>
+              <p className="text-sm text-muted-foreground mt-3">
+                Camera stream, growth photos, sensor charts.
+              </p>
+              <div className="flex flex-wrap gap-2 mt-4 text-xs text-muted-foreground">
+                <span className="rounded-full bg-emerald-50 px-2 py-1">Live feed</span>
+                <span className="rounded-full bg-emerald-50 px-2 py-1">Charts</span>
+                <span className="rounded-full bg-emerald-50 px-2 py-1">History</span>
+              </div>
             </div>
           </div>
         </div>
@@ -167,25 +327,74 @@ const Index = () => (
       </section>
 
       <section className="py-16 bg-white" id="game">
-        <div className="container grid gap-10 lg:grid-cols-2">
-          <div className="space-y-4">
-            <h2 className="text-3xl font-bold">Game Experience</h2>
-            <p className="text-muted-foreground">Play, grow, and monitor your crops like a real farmer.</p>
-            <div className="grid gap-3">
-              <div className="rounded-xl bg-card shadow-card p-4">Buy your garden plot</div>
-              <div className="rounded-xl bg-card shadow-card p-4">Plant seeds and track growth</div>
-              <div className="rounded-xl bg-card shadow-card p-4">Water plants through gameplay</div>
-              <div className="rounded-xl bg-card shadow-card p-4">Monitor temperature and soil moisture</div>
-              <div className="rounded-xl bg-card shadow-card p-4">Chat with an AI gardener</div>
+        <div className="container space-y-8">
+          <div className="grid gap-8 lg:grid-cols-[1.1fr_1fr]">
+            <div className="rounded-2xl bg-card shadow-card p-6 border border-emerald-100">
+              <div className="flex items-center gap-2 text-emerald-700 font-semibold">
+                <Gamepad2 className="h-5 w-5" />
+                Game Experience
+              </div>
+              <p className="text-muted-foreground mt-3">Play, grow, and monitor your crops like a real farmer.</p>
+              <div className="grid gap-3 mt-5 text-sm">
+                <div className="flex items-center gap-3 rounded-xl bg-white p-4 shadow-card">
+                  <Sprout className="h-4 w-4 text-emerald-600" />
+                  Buy your garden plot
+                </div>
+                <div className="flex items-center gap-3 rounded-xl bg-white p-4 shadow-card">
+                  <BookOpen className="h-4 w-4 text-emerald-600" />
+                  Plant seeds and track growth
+                </div>
+                <div className="flex items-center gap-3 rounded-xl bg-white p-4 shadow-card">
+                  <Droplets className="h-4 w-4 text-emerald-600" />
+                  Water plants through gameplay
+                </div>
+                <div className="flex items-center gap-3 rounded-xl bg-white p-4 shadow-card">
+                  <BarChart3 className="h-4 w-4 text-emerald-600" />
+                  Monitor temperature and soil moisture
+                </div>
+                <div className="flex items-center gap-3 rounded-xl bg-white p-4 shadow-card">
+                  <Bot className="h-4 w-4 text-emerald-600" />
+                  Chat with an AI gardener
+                </div>
+              </div>
+              <div className="flex flex-wrap gap-2 mt-5 text-xs text-muted-foreground">
+                <span className="rounded-full bg-emerald-50 px-2 py-1">Unity 3D</span>
+                <span className="rounded-full bg-emerald-50 px-2 py-1">Live feedback</span>
+                <span className="rounded-full bg-emerald-50 px-2 py-1">Gamified tasks</span>
+              </div>
+            </div>
+            <div className="rounded-2xl bg-emerald-600 text-white shadow-elevated p-6">
+              <div className="flex items-center gap-2 text-emerald-100 font-semibold">
+                <Cpu className="h-5 w-5" />
+                Real Farm System
+              </div>
+              <p className="text-emerald-50 mt-3">
+                Our physical prototype includes soil moisture sensors, temperature sensors, an irrigation pump, phytolamp, and camera monitoring.
+              </p>
+              <div className="grid gap-3 mt-5 text-sm">
+                <div className="rounded-xl bg-emerald-500/40 p-3">Soil moisture sensor</div>
+                <div className="rounded-xl bg-emerald-500/40 p-3">Temperature sensor</div>
+                <div className="rounded-xl bg-emerald-500/40 p-3">Irrigation pump + phytolamp</div>
+                <div className="rounded-xl bg-emerald-500/40 p-3">Camera monitoring</div>
+              </div>
+              <div className="mt-5 rounded-xl bg-white/15 p-4 text-sm text-emerald-50">
+                Connected to cloud server and the game platform for real-time control.
+              </div>
             </div>
           </div>
-          <div className="space-y-4">
-            <h2 className="text-3xl font-bold">Real Farm System</h2>
-            <p className="text-muted-foreground">
-              Our physical prototype includes soil moisture sensors, temperature sensors, an irrigation pump, phytolamp, and camera monitoring.
-            </p>
-            <div className="rounded-2xl bg-card shadow-elevated p-6 text-sm text-muted-foreground">
-              Connected to cloud server and the game platform for real-time control.
+
+          <div className="rounded-2xl bg-white/90 border border-emerald-100 p-6">
+            <div className="text-sm text-muted-foreground mb-3">End-to-end flow</div>
+            <div className="flex flex-wrap items-center gap-3 text-sm">
+              <span className="rounded-full bg-emerald-50 px-3 py-1">Player</span>
+              <ArrowRight className="h-4 w-4 text-emerald-400" />
+              <span className="rounded-full bg-emerald-50 px-3 py-1">Unity / AI</span>
+              <ArrowRight className="h-4 w-4 text-emerald-400" />
+              <span className="rounded-full bg-emerald-50 px-3 py-1">Cloud</span>
+              <ArrowRight className="h-4 w-4 text-emerald-400" />
+              <span className="rounded-full bg-emerald-50 px-3 py-1">Greenhouse</span>
+              <ArrowRight className="h-4 w-4 text-emerald-400" />
+              <span className="rounded-full bg-emerald-50 px-3 py-1">Data + Harvest</span>
             </div>
           </div>
         </div>
@@ -202,7 +411,96 @@ const Index = () => (
               Важно: растения и семена оплачиваются отдельно от подписки.
             </div>
           </div>
-          <div className="overflow-x-auto">
+          <div className="md:hidden space-y-4">
+            <div className="rounded-2xl bg-white border border-emerald-100 p-5 shadow-card space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="text-xs uppercase text-muted-foreground">Simple</div>
+                  <div className="text-lg font-semibold">4 990 ₸ / мес</div>
+                </div>
+                <span className="rounded-full bg-emerald-100 text-emerald-700 text-xs px-2 py-1">Entry</span>
+              </div>
+              <p className="text-sm text-muted-foreground">Малые эксперименты</p>
+              <ul className="space-y-2 text-sm">
+                <Feature icon={Sprout}>Аренда до 3 культур</Feature>
+                <Feature icon={Droplets}>Базовые датчики: влажность и температура</Feature>
+                <Feature icon={Monitor}>Онлайн-мониторинг</Feature>
+                <Feature icon={Bot}>AI-советы по уходу</Feature>
+              </ul>
+              <Button className="w-full" asChild>
+                <Link to="/register">Подключиться</Link>
+              </Button>
+            </div>
+
+            <div className="rounded-2xl bg-emerald-600 text-white p-5 shadow-elevated space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="text-xs uppercase text-emerald-100">Standard</div>
+                  <div className="text-xl font-semibold">9 990 ₸ / мес</div>
+                </div>
+                <span className="rounded-full bg-white text-emerald-700 text-xs px-2 py-1">Best value</span>
+              </div>
+              <p className="text-sm text-emerald-100">Активные пользователи</p>
+              <ul className="space-y-2 text-sm">
+                <Feature icon={Sprout} tone="light">Аренда до 4 культур</Feature>
+                <Feature icon={Activity} tone="light">Расширенные датчики</Feature>
+                <Feature icon={Camera} tone="light">Фотораспознавание болезней</Feature>
+                <Feature icon={BookOpen} tone="light">Дневник роста и графики</Feature>
+                <Feature icon={BarChart3} tone="light">Аналитика температуры и влажности</Feature>
+                <Feature icon={Bot} tone="light">AI-советы и прогноз урожая</Feature>
+                <Feature icon={Zap} tone="light">1 автоматизация (автополив)</Feature>
+              </ul>
+              <Button className="w-full" variant="secondary" asChild>
+                <Link to="/register">Подключиться</Link>
+              </Button>
+            </div>
+
+            <div className="rounded-2xl bg-white border border-emerald-100 p-5 shadow-card space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="text-xs uppercase text-muted-foreground">Premium</div>
+                  <div className="text-lg font-semibold">19 990 ₸ / мес</div>
+                </div>
+                <span className="rounded-full bg-emerald-100 text-emerald-700 text-xs px-2 py-1">Advanced</span>
+              </div>
+              <p className="text-sm text-muted-foreground">Крупные участки</p>
+              <ul className="space-y-2 text-sm">
+                <Feature icon={Sprout}>Аренда до 5 культур</Feature>
+                <Feature icon={Activity}>Расширенные датчики</Feature>
+                <Feature icon={FileText}>История данных и отчеты</Feature>
+                <Feature icon={Zap}>2 автоматизации</Feature>
+                <Feature icon={Bot}>AI-советы и прогноз урожая</Feature>
+                <Feature icon={BadgeCheck}>Приоритетная поддержка</Feature>
+              </ul>
+              <Button className="w-full" asChild>
+                <Link to="/register">Подключиться</Link>
+              </Button>
+            </div>
+
+            <div className="rounded-2xl bg-white border border-emerald-100 p-5 shadow-card space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="text-xs uppercase text-muted-foreground">Pro</div>
+                  <div className="text-lg font-semibold">39 990 ₸ / мес</div>
+                </div>
+                <span className="rounded-full bg-emerald-100 text-emerald-700 text-xs px-2 py-1">Pro farms</span>
+              </div>
+              <p className="text-sm text-muted-foreground">Профессиональные фермеры</p>
+              <ul className="space-y-2 text-sm">
+                <Feature icon={Sprout}>Неограниченно культур</Feature>
+                <Feature icon={Cpu}>Полный набор датчиков</Feature>
+                <Feature icon={LineChart}>AI-аналитика и прогноз рисков</Feature>
+                <Feature icon={FileText}>Детальные отчеты</Feature>
+                <Feature icon={Zap}>Автоматизация без лимита</Feature>
+                <Feature icon={Truck}>Бесплатная доставка оборудования</Feature>
+              </ul>
+              <Button className="w-full" asChild>
+                <Link to="/register">Подключиться</Link>
+              </Button>
+            </div>
+          </div>
+
+          <div className="hidden md:block overflow-x-auto">
             <table className="w-full min-w-[980px] border-separate border-spacing-0">
               <thead>
                 <tr className="text-xs uppercase tracking-wide text-muted-foreground">

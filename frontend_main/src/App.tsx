@@ -13,6 +13,7 @@ import Plants from "./pages/Plants";
 import Sensors from "./pages/Sensors";
 import AccountSettings from "./pages/AccountSettings";
 import NotFound from "./pages/NotFound";
+import Subscriptions from "./pages/Subscriptions";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,7 @@ const AppRoutes = () => {
       <Route path="/" element={<Index />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/subscriptions" element={<Subscriptions />} />
       <Route
         path="/dashboard"
         element={
