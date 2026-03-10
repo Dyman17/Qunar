@@ -46,9 +46,13 @@ const Register = () => {
         </div>
         <form className="p-6 rounded-xl bg-card shadow-elevated space-y-4" onSubmit={handleSubmit}>
           <Input placeholder="Full name" value={fullName} onChange={(e) => setFullName(e.target.value)} />
+          <p className="text-xs text-muted-foreground">Имя можно оставить пустым и добавить позже в настройках.</p>
           <Input placeholder="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+          <p className="text-xs text-muted-foreground">Мы используем email для входа и восстановления доступа.</p>
           <Input placeholder="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+          <p className="text-xs text-muted-foreground">Минимум 8 символов.</p>
           <Input placeholder="Confirm password" type="password" value={confirm} onChange={(e) => setConfirm(e.target.value)} required />
+          <p className="text-xs text-muted-foreground">Повторите пароль, чтобы избежать ошибки.</p>
           <Button type="submit" className="w-full" disabled={loading}>
             {loading ? "Creating..." : "Register"}
           </Button>

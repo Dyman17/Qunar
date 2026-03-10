@@ -40,7 +40,9 @@ const Login = () => {
         </div>
         <form className="p-6 rounded-xl bg-card shadow-elevated space-y-4" onSubmit={handleSubmit}>
           <Input placeholder="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+          <p className="text-xs text-muted-foreground">Введите email, который вы использовали при регистрации.</p>
           <Input placeholder="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+          <p className="text-xs text-muted-foreground">Пароль должен совпадать с вашим аккаунтом.</p>
           <Button type="submit" className="w-full" disabled={loading}>
             {loading ? "Logging in..." : "Login"}
           </Button>

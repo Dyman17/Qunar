@@ -53,6 +53,7 @@ const Dashboard = () => {
             <div>
               <h1 className="text-3xl font-bold">Dashboard</h1>
               <p className="text-muted-foreground">Welcome back, {user?.full_name || user?.email}</p>
+              <p className="text-xs text-muted-foreground">Нажмите Reload, чтобы подтянуть актуальные данные.</p>
             </div>
             <Button onClick={loadDashboard} disabled={loading}>
               {loading ? "Loading..." : "Reload"}

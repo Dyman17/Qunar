@@ -147,6 +147,9 @@ const Sensors = () => {
           <div className="grid lg:grid-cols-2 gap-6">
             <div className="p-6 rounded-xl bg-card shadow-card">
               <h2 className="text-xl font-semibold mb-4">Create Sensor</h2>
+              <p className="text-xs text-muted-foreground mb-3">
+                Сенсор привязывается к выбранной ферме. Тип определяет, какие данные будут приходить.
+              </p>
               <form className="space-y-3" onSubmit={handleCreate}>
                 <select className={selectClass} value={plotId} onChange={(e) => setPlotId(e.target.value)}>
                   {farms.map((farm) => (
@@ -169,6 +172,9 @@ const Sensors = () => {
 
             <div className="p-6 rounded-xl bg-card shadow-card">
               <h2 className="text-xl font-semibold mb-4">Send Sensor Data</h2>
+              <p className="text-xs text-muted-foreground mb-3">
+                Для отправки данных сначала создайте сенсор. Укажите значение и единицу измерения.
+              </p>
               <form className="space-y-3" onSubmit={handleSendData}>
                 <select className={selectClass} value={dataSensorId} onChange={(e) => setDataSensorId(e.target.value)}>
                   {sensors.map((sensor) => (

@@ -152,6 +152,9 @@ const Plants = () => {
           <div className="grid lg:grid-cols-2 gap-6">
             <div className="p-6 rounded-xl bg-card shadow-card">
               <h2 className="text-xl font-semibold mb-4">Create Plant</h2>
+              <p className="text-xs text-muted-foreground mb-3">
+                Сначала выберите ферму, затем тип растения. Harvest доступен только при статусе ready.
+              </p>
               <form className="space-y-3" onSubmit={handleCreate}>
                 <select className={selectClass} value={plotId} onChange={(e) => setPlotId(e.target.value)}>
                   {farms.map((farm) => (
@@ -181,6 +184,9 @@ const Plants = () => {
                 <h2 className="text-xl font-semibold">Plants</h2>
                 <Button variant="outline" onClick={loadPlants} disabled={loading}>Reload</Button>
               </div>
+              <p className="text-xs text-muted-foreground mb-3">
+                Make Ready поднимает прогресс до 100%. Harvest доступен только для ready.
+              </p>
               {plants.length === 0 && <div className="text-sm text-muted-foreground">No plants yet.</div>}
               {plants.length > 0 && (
                 <div className="overflow-auto">

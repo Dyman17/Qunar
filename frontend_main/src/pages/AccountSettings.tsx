@@ -37,6 +37,9 @@ const AccountSettings = () => {
       <main className="pt-16">
         <div className="container py-8 max-w-2xl">
           <h1 className="text-3xl font-bold mb-8">Account Settings</h1>
+          <p className="text-xs text-muted-foreground mb-6">
+            Здесь можно обновить профиль. Изменения сохраняются в базе сразу после нажатия Save.
+          </p>
 
           <div className="space-y-8">
             <section className="p-6 rounded-xl bg-card shadow-card space-y-4">

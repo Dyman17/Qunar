@@ -102,6 +102,9 @@ const Farms = () => {
           <div className="grid lg:grid-cols-2 gap-6">
             <div className="p-6 rounded-xl bg-card shadow-card">
               <h2 className="text-xl font-semibold mb-4">Create Farm</h2>
+              <p className="text-xs text-muted-foreground mb-3">
+                Выберите шаблон фермы. Размер можно изменить вручную. Координаты необязательны.
+              </p>
               <form className="space-y-3" onSubmit={handleCreate}>
                 <select className={selectClass} value={templateId} onChange={(e) => setTemplateId(e.target.value)}>
                   <option value="">Select farm type</option>
