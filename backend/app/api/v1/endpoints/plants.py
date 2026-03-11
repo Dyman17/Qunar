@@ -212,11 +212,20 @@ async def delete_plant(
     )
     if not plant:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Plant not found")
+    # Remove harvest history first to avoid FK issues in older schemas
+    harvest_count = (
+        db.query(Harvest)
+        .filter(Harvest.crop_id == plant.id)
+        .delete(synchronize_session=False)
+    )
+
     db.delete(plant)
 
     user_stats = db.query(UserStats).filter(UserStats.user_id == current_user.id).first()
     if user_stats:
         user_stats.total_crops = max((user_stats.total_crops or 0) - 1, 0)
+        if harvest_count:
+            user_stats.total_harvests = max((user_stats.total_harvests or 0) - harvest_count, 0)
 
     log_activity(
         db,
