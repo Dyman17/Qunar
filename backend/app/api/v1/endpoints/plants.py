@@ -212,12 +212,6 @@ async def delete_plant(
     )
     if not plant:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Plant not found")
-    if plant.status == "harvested":
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Cannot delete harvested plant",
-        )
-
     db.delete(plant)
 
     user_stats = db.query(UserStats).filter(UserStats.user_id == current_user.id).first()

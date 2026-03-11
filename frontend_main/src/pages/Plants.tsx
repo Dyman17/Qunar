@@ -132,6 +132,11 @@ const Plants = () => {
     setLoading(true);
     setMessage(null);
     try {
+      const ok = window.confirm("Удалить растение? Это действие нельзя отменить.");
+      if (!ok) {
+        setLoading(false);
+        return;
+      }
       await apiDelete(`${API_PREFIX}/plants/${plantId}`);
       setMessage("Success: plant deleted");
       await loadPlants();
