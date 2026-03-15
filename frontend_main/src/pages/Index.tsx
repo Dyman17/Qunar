@@ -54,23 +54,23 @@ const Index = () => (
         <div className="container py-24 grid gap-12 lg:grid-cols-2 items-center">
           <div className="space-y-6">
             <div className="inline-flex items-center gap-2 rounded-full bg-accent px-4 py-2 text-xs uppercase tracking-wide text-muted-foreground">
-              Agrotech + Gaming + FoodTech
+              Агротех + Игры + ПродТех
             </div>
             <h1 className="text-4xl md:text-6xl font-bold text-gradient-primary">
-              Qunar - Grow Real Food Through a Game
+              Qunar - Выращивай настоящую еду через игру
             </h1>
             <p className="text-lg text-muted-foreground">
-              Control a real garden from your phone. Plant seeds, water crops, monitor growth and receive your harvest at home.
+              Управляй реальным садом с телефона. Сажай семена, поливай урожай, отслеживай рост и получай урожай домой.
             </p>
             <div className="flex flex-wrap gap-3">
               <Button asChild>
-                <Link to="/register">Try Demo</Link>
+                <Link to="/register">Попробовать демо</Link>
               </Button>
               <Button variant="outline" asChild>
-                <a href="#demo">Watch Video</a>
+                <a href="#demo">Смотреть видео</a>
               </Button>
               <Button variant="ghost" asChild>
-                <a href="#waitlist">Join Waitlist</a>
+                <a href="#waitlist">Присоединиться</a>
               </Button>
             </div>
           </div>

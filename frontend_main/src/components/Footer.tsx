@@ -11,19 +11,19 @@ const Footer = () => (
             QUNAR
           </Link>
           <p className="text-muted-foreground text-sm max-w-sm">
-            Manage virtual and real farms from one dashboard. Track plants, sensors, and harvests in real time.
+            Управляй виртуальными и реальными фермами с одной панели. Отслеживай растения, датчики и урожай в реальном времени.
           </p>
         </div>
         <div>
-          <h4 className="font-display font-semibold mb-3">Support</h4>
+          <h4 className="font-display font-semibold mb-3">Поддержка</h4>
           <div className="flex flex-col gap-2 text-sm text-muted-foreground">
             <span>hello@qunar.farm</span>
-            <Link to="/settings" className="hover:text-foreground transition-colors">Account settings</Link>
+            <Link to="/settings" className="hover:text-foreground transition-colors">Параметры аккаунта</Link>
           </div>
         </div>
       </div>
       <div className="border-t mt-8 pt-6 text-center text-sm text-muted-foreground">
-        © 2026 QUNAR. All rights reserved.
+        © 2026 QUNAR. Все права защищены.
       </div>
     </div>
   </footer>

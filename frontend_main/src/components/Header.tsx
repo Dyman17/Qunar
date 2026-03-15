@@ -5,12 +5,12 @@ import { Sprout, Menu, X, LogOut } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 
 const navLinks = [
-  { to: "/dashboard", label: "Dashboard" },
-  { to: "/subscriptions", label: "Subscriptions" },
-  { to: "/farms", label: "Farms" },
-  { to: "/plants", label: "Plants" },
-  { to: "/sensors", label: "Sensors" },
-  { to: "/settings", label: "Settings" },
+  { to: "/dashboard", label: "Панель управления" },
+  { to: "/subscriptions", label: "Подписки" },
+  { to: "/farms", label: "Фермы" },
+  { to: "/plants", label: "Растения" },
+  { to: "/sensors", label: "Датчики" },
+  { to: "/settings", label: "Параметры" },
 ];
 
 const Header = () => {
@@ -46,16 +46,16 @@ const Header = () => {
           {!user && (
             <>
               <Button variant="ghost" asChild>
-                <Link to="/login">Login</Link>
+                <Link to="/login">Вход</Link>
               </Button>
               <Button asChild>
-                <Link to="/register">Register</Link>
+                <Link to="/register">Регистрация</Link>
               </Button>
             </>
           )}
           {user && (
             <Button variant="outline" onClick={logout}>
-              <LogOut className="w-4 h-4 mr-2" /> Logout
+              <LogOut className="w-4 h-4 mr-2" /> Выход
             </Button>
           )}
         </div>
@@ -89,16 +89,16 @@ const Header = () => {
               {!user && (
                 <>
                   <Button variant="ghost" asChild className="flex-1">
-                    <Link to="/login" onClick={() => setMobileOpen(false)}>Login</Link>
+                    <Link to="/login" onClick={() => setMobileOpen(false)}>Вход</Link>
                   </Button>
                   <Button asChild className="flex-1">
-                    <Link to="/register" onClick={() => setMobileOpen(false)}>Register</Link>
+                    <Link to="/register" onClick={() => setMobileOpen(false)}>Регистрация</Link>
                   </Button>
                 </>
               )}
               {user && (
                 <Button variant="outline" className="flex-1" onClick={logout}>
-                  Logout
+                  Выход
                 </Button>
               )}
             </div>
