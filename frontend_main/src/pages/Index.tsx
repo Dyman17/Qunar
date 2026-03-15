@@ -827,15 +827,6 @@ const Index = () => (
             </div>
             <div className="rounded-2xl bg-card shadow-card p-5">
               <div className="flex items-center gap-3">
-                <div className="h-12 w-12 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-semibold">DJ</div>
-                <div>
-                  <div className="font-semibold">Duman Jembai</div>
-                  <div className="text-sm text-muted-foreground">Founder</div>
-                </div>
-              </div>
-            </div>
-            <div className="rounded-2xl bg-card shadow-card p-5">
-              <div className="flex items-center gap-3">
                 <div className="h-12 w-12 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-semibold">MM</div>
                 <div>
                   <div className="font-semibold">Madi Medet</div>
