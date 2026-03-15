@@ -780,7 +780,7 @@ const Index = () => (
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
             <div>
               <h2 className="text-3xl font-bold">Team</h2>
-              <p className="text-muted-foreground">Core founders and mentor driving Qunar forward.</p>
+              <p className="text-muted-foreground">Core founders driving Qunar forward.</p>
             </div>
             <div className="inline-flex items-center gap-2 rounded-full bg-emerald-50 text-emerald-700 text-xs px-3 py-1">
               Founding team
