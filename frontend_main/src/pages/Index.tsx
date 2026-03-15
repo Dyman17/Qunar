@@ -611,8 +611,17 @@ const Index = () => {
               <h2 className="text-3xl font-bold">{t("landing.demo.title")}</h2>
               <p className="text-muted-foreground">{t("landing.demo.subtitle")}</p>
               <Button asChild>
-                <a href="https://youtu.be/zWNrd3ZX28w" target="_blank" rel="noreferrer">{t("landing.demo.button")}</a>
+                <a href="https://youtu.be/xWs9OQClSWg?si=gYnUc5s18K3fnZiY" target="_blank" rel="noreferrer">{t("landing.demo.button")}</a>
               </Button>
+          </div>
+          <div className="aspect-video rounded-2xl overflow-hidden shadow-elevated bg-black">
+            <iframe
+              className="w-full h-full"
+              src="https://www.youtube.com/embed/xWs9OQClSWg"
+              title={t("landing.demo.title")}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
           </div>
         </Reveal>
       </section>
