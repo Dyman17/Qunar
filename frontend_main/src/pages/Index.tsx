@@ -305,26 +305,6 @@ const Index = () => (
         </div>
       </section>
 
-      <section className="py-16 bg-emerald-50/70" id="demo">
-        <div className="container grid gap-10 lg:grid-cols-2 items-center">
-          <div className="space-y-4">
-            <h2 className="text-3xl font-bold">Product Demo</h2>
-            <p className="text-muted-foreground">See how Qunar works in real life.</p>
-            <Button asChild>
-              <a href="https://youtu.be/zWNrd3ZX28w" target="_blank" rel="noreferrer">Open Demo Video</a>
-            </Button>
-          </div>
-          <div className="aspect-video rounded-2xl overflow-hidden shadow-elevated bg-black">
-            <iframe
-              className="w-full h-full"
-              src="https://www.youtube.com/embed/zWNrd3ZX28w"
-              title="Qunar demo video"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
-          </div>
-        </div>
-      </section>
 
       <section className="py-16 bg-white" id="game">
         <div className="container space-y-8">
@@ -822,15 +802,6 @@ const Index = () => (
                 <div>
                   <div className="font-semibold">Fariza Turebayeva</div>
                   <div className="text-sm text-muted-foreground">Co-founder</div>
-                </div>
-              </div>
-            </div>
-            <div className="rounded-2xl bg-card shadow-card p-5">
-              <div className="flex items-center gap-3">
-                <div className="h-12 w-12 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-semibold">MM</div>
-                <div>
-                  <div className="font-semibold">Madi Medet</div>
-                  <div className="text-sm text-muted-foreground">Mentor</div>
                 </div>
               </div>
             </div>
