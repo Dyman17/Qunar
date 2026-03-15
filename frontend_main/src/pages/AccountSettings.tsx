@@ -1,14 +1,16 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { apiPatch, API_PREFIX } from "@/api/client";
 import { useAuth } from "@/context/AuthContext";
+import { useI18n } from "@/context/I18nContext";
 import { toast } from "sonner";
 
 const AccountSettings = () => {
   const { user, refreshUser } = useAuth();
+  const { t } = useI18n();
   const [fullName, setFullName] = useState(user?.full_name || "");
   const [phone, setPhone] = useState(user?.phone || "");
   const [email, setEmail] = useState(user?.email || "");
@@ -23,9 +25,9 @@ const AccountSettings = () => {
         email: email || null,
       });
       await refreshUser();
-      toast.success("Profile updated");
+      toast.success(t("settingsPage.saved"));
     } catch (err: any) {
-      toast.error(err.message || "Failed to update profile");
+      toast.error(err.message || t("settingsPage.error"));
     } finally {
       setLoading(false);
     }
@@ -36,32 +38,33 @@ const AccountSettings = () => {
       <Header />
       <main className="pt-16">
         <div className="container py-8 max-w-2xl">
-          <h1 className="text-3xl font-bold mb-8">Account Settings</h1>
-          <p className="text-xs text-muted-foreground mb-6">
-            Здесь можно обновить профиль. Изменения сохраняются в базе сразу после нажатия Save.
-          </p>
+          <h1 className="text-3xl font-bold mb-8">{t("settingsPage.title")}</h1>
+          <p className="text-xs text-muted-foreground mb-6">{t("settingsPage.description")}</p>
 
           <div className="space-y-8">
             <section className="p-6 rounded-xl bg-card shadow-card space-y-4">
-              <h2 className="font-display font-semibold text-lg">Profile</h2>
+              <h2 className="font-display font-semibold text-lg">{t("settingsPage.profileTitle")}</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <Input placeholder="Full name" value={fullName} onChange={(e) => setFullName(e.target.value)} />
+                <Input placeholder={t("settingsPage.fullName")} value={fullName} onChange={(e) => setFullName(e.target.value)} />
                 <Input placeholder="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                <Input placeholder="Phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
+                <Input placeholder={t("settingsPage.phone")} value={phone} onChange={(e) => setPhone(e.target.value)} />
               </div>
-              <Button onClick={handleSave} disabled={loading}>Save</Button>
+              <Button onClick={handleSave} disabled={loading}>
+                {loading ? t("settingsPage.saving") : t("settingsPage.save")}
+              </Button>
             </section>
 
             <section className="p-6 rounded-xl bg-card shadow-card space-y-4">
-              <h2 className="font-display font-semibold text-lg">Subscription</h2>
+              <h2 className="font-display font-semibold text-lg">{t("settingsPage.subscriptionTitle")}</h2>
               <div className="flex items-center justify-between p-4 rounded-lg bg-accent">
                 <div>
-                  <p className="font-semibold">{user?.subscription_type || "basic"} plan</p>
-                  <p className="text-sm text-muted-foreground">Manage subscription in admin panel</p>
+                  <p className="font-semibold">
+                    {t("settingsPage.subscriptionPlan", { plan: user?.subscription_type || "basic" })}
+                  </p>
+                  <p className="text-sm text-muted-foreground">{t("settingsPage.subscriptionHint")}</p>
                 </div>
-                <Button variant="outline" onClick={() => toast.info("Contact admin to upgrade")}
-                >
-                  Upgrade
+                <Button variant="outline" onClick={() => toast.info(t("settingsPage.upgradeInfo"))}>
+                  {t("settingsPage.upgrade")}
                 </Button>
               </div>
             </section>

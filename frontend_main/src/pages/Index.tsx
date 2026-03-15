@@ -1,7 +1,11 @@
 ﻿import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
+import Reveal from "@/components/motion/Reveal";
+import Stagger from "@/components/motion/Stagger";
+import { useI18n } from "@/context/I18nContext";
 import {
   Sprout,
   Droplets,
@@ -24,7 +28,7 @@ import {
   Globe2,
   Leaf,
   Gamepad2,
-  ArrowRight,
+  Sun,
 } from "lucide-react";
 
 const Feature = ({
@@ -46,151 +50,447 @@ const Feature = ({
   );
 };
 
-const Index = () => (
-  <div className="min-h-screen">
-    <Header />
-    <main className="pt-16">
-      <section className="bg-hero-gradient">
-        <div className="container py-24 grid gap-12 lg:grid-cols-2 items-center">
-          <div className="space-y-6">
-            <div className="inline-flex items-center gap-2 rounded-full bg-accent px-4 py-2 text-xs uppercase tracking-wide text-muted-foreground">
-              Агротех + Игры + ПродТех
+const heroContainer = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.12, delayChildren: 0.1 },
+  },
+};
+
+const heroItem = {
+  hidden: { opacity: 0, y: 26 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+};
+
+const Index = () => {
+  const { t, language } = useI18n();
+  const problemCopy = {
+    en: {
+      badge: "Problem",
+      title: "The problem Qunar solves",
+      subtitle: "People want eco food, but most lack land, time, or knowledge.",
+      cardCityTitle: "Dependence on stores",
+      cardCityDesc: "City residents rely on mass-production supply.",
+      cardTimeTitle: "Long logistics",
+      cardTimeDesc: "Food travels a long chain before it reaches people.",
+      cardTrustTitle: "No control of growing",
+      cardTrustDesc: "People cannot see how and where their food is grown.",
+    },
+    ru: {
+      badge: "Проблема",
+      title: "Проблема, которую решает Qunar",
+      subtitle:
+        "Люди хотят экологичную еду, но у большинства нет земли, времени или знаний, чтобы выращивать её самостоятельно.",
+      cardCityTitle: "Зависимость от магазинов",
+      cardCityDesc: "Городские жители зависят от массового производства продуктов питания.",
+      cardTimeTitle: "Длинная логистика",
+      cardTimeDesc: "Еда проходит длинную цепочку поставок, прежде чем попасть к потребителю.",
+      cardTrustTitle: "Отсутствие контроля за выращиванием",
+      cardTrustDesc: "Люди не могут видеть, как и где выращивается их еда.",
+    },
+    kk: {
+      badge: "Мәселе",
+      title: "Qunar шешетін мәселе",
+      subtitle:
+        "Адамдар экологиялық таза тағамды қалайды, бірақ көпшілігінде оны өздері өсіруге жер, уақыт немесе білім жоқ.",
+      cardCityTitle: "Дүкендерге тәуелділік",
+      cardCityDesc: "Қала тұрғындары жаппай өндірілетін азық-түлікке тәуелді.",
+      cardTimeTitle: "Ұзақ логистика",
+      cardTimeDesc: "Тағам тұтынушыға жеткенше ұзақ жеткізу тізбегінен өтеді.",
+      cardTrustTitle: "Өсіру процесін бақылаудың болмауы",
+      cardTrustDesc: "Адамдар өз тағамының қалай және қай жерде өсірілгенін көре алмайды.",
+    },
+  } as const;
+  const problemText = problemCopy[language] ?? problemCopy.en;
+  const macroCopy = {
+    en: {
+      title: "Market opportunity",
+      subtitle: "Smart agriculture is growing and demand for transparent food is rising.",
+      marketTitle: "Smart agriculture",
+      marketDesc: "The smart‑agro market keeps growing globally.",
+      urbanTitle: "Urbanization",
+      urbanDesc: "More people live in cities without land to farm.",
+      organicTitle: "Organic demand",
+      organicDesc: "People want healthy, traceable food.",
+      trustTitle: "Transparency",
+      trustDesc: "Users expect visibility into how food is grown.",
+    },
+    ru: {
+      title: "Рыночная возможность",
+      subtitle: "Умное сельское хозяйство быстро развивается, а спрос на прозрачную еду растёт.",
+      marketTitle: "Умное сельское хозяйство",
+      marketDesc: "Рынок smart-agriculture быстро растёт по всему миру.",
+      urbanTitle: "Урбанизация",
+      urbanDesc: "Всё больше людей живут в городах и не имеют земли для выращивания продуктов.",
+      organicTitle: "Спрос на органическую еду",
+      organicDesc: "Люди всё чаще хотят здоровую и отслеживаемую еду.",
+      trustTitle: "Прозрачность",
+      trustDesc: "Пользователи ожидают прозрачности и возможности видеть процесс выращивания еды.",
+    },
+    kk: {
+      title: "Нарық мүмкіндігі",
+      subtitle: "Ақылды ауыл шаруашылығы дамып, ашық тағамға сұраныс артуда.",
+      marketTitle: "Ақылды ауыл шаруашылығы",
+      marketDesc: "Smart-agriculture нарығы бүкіл әлемде жылдам өсіп жатыр.",
+      urbanTitle: "Урбанизация",
+      urbanDesc: "Барған сайын көп адам қалаларда өмір сүреді және жерге қол жеткізе алмайды.",
+      organicTitle: "Органикалық тағамға сұраныс",
+      organicDesc: "Адамдар пайдалы әрі қадағаланатын тағамды қалайды.",
+      trustTitle: "Ашықтық",
+      trustDesc: "Пайдаланушылар тағамның қалай өсірілетінін көргісі келеді және ашық ақпарат күтеді.",
+    },
+  } as const;
+  const macroText = macroCopy[language] ?? macroCopy.en;
+  const competitionCopy = {
+    en: {
+      title: "Competition",
+      subtitle: "How Qunar compares to other smart farming solutions.",
+      othersTitle: "Other solutions",
+      othersIntro:
+        "There are platforms related to smart farming, online agriculture, and farm management, but most focus only on monitoring, analytics, or equipment sales.",
+      othersPoint1Title: "Limited user involvement",
+      othersPoint1Desc:
+        "Many existing solutions are designed for professional farmers and do not let ordinary users participate in growing.",
+      othersPoint2Title: "No real interaction",
+      othersPoint2Desc:
+        "In most cases, users can only watch data and statistics without direct control over cultivation.",
+      advantageTitle: "Qunar Advantage",
+      advantagePoint1Title: "Interactive farming",
+      advantagePoint1Desc:
+        "Qunar lets users interact with a real farm through a game-like digital interface.",
+      advantagePoint2Title: "Real-world impact",
+      advantagePoint2Desc:
+        "Every action in the digital environment affects real plants on a physical farm.",
+      advantagePoint3Title: "Accessible for everyone",
+      advantagePoint3Desc:
+        "Designed for farmers and urban residents who want to grow food remotely.",
+      advantagePoint4Title: "Transparency and trust",
+      advantagePoint4Desc:
+        "Users track the full growing process and receive verified crop data.",
+      othersTag1: "Monitoring only",
+      othersTag2: "No direct control",
+      othersTag3: "Hardware focused",
+      advantageTag1: "Game + IoT",
+      advantageTag2: "Live sensors",
+      advantageTag3: "Harvest delivery",
+    },
+    ru: {
+      title: "Конкуренция",
+      subtitle: "Сравнение Qunar с другими решениями умного фермерства.",
+      othersTitle: "Другие решения",
+      othersIntro:
+        "Есть платформы про smart farming, онлайн‑агро и управление фермами, но они чаще всего про мониторинг, аналитику или продажу оборудования.",
+      othersPoint1Title: "Ограниченное вовлечение",
+      othersPoint1Desc:
+        "Многие решения рассчитаны на профессиональных фермеров и не дают обычным людям участвовать в выращивании.",
+      othersPoint2Title: "Нет реального взаимодействия",
+      othersPoint2Desc:
+        "Обычно пользователи видят лишь данные и статистику, но не могут управлять выращиванием напрямую.",
+      advantageTitle: "Преимущество Qunar",
+      advantagePoint1Title: "Интерактивное фермерство",
+      advantagePoint1Desc:
+        "Qunar позволяет взаимодействовать с реальной фермой через игровую цифровую среду.",
+      advantagePoint2Title: "Реальный эффект",
+      advantagePoint2Desc:
+        "Каждое действие в цифровой среде связано с настоящими растениями на ферме.",
+      advantagePoint3Title: "Доступно каждому",
+      advantagePoint3Desc:
+        "Платформа подходит не только фермерам, но и городским жителям, желающим выращивать еду удаленно.",
+      advantagePoint4Title: "Прозрачность и доверие",
+      advantagePoint4Desc:
+        "Пользователь видит полный цикл выращивания и получает подтвержденные данные.",
+      othersTag1: "Только мониторинг",
+      othersTag2: "Без управления",
+      othersTag3: "Оборудование",
+      advantageTag1: "Игра + IoT",
+      advantageTag2: "Live-сенсоры",
+      advantageTag3: "Доставка урожая",
+    },
+    kk: {
+      title: "Бәсекелестік",
+      subtitle: "Qunar-ды басқа smart farming шешімдерімен салыстыру.",
+      othersTitle: "Басқа шешімдер",
+      othersIntro:
+        "Smart farming, онлайн‑агро және ферма басқару платформалары бар, бірақ көпшілігі тек мониторинг, аналитика немесе жабдық сатуға бағытталған.",
+      othersPoint1Title: "Қатысу шектеулі",
+      othersPoint1Desc:
+        "Көптеген шешімдер кәсіби фермерлерге арналған және қарапайым адамдарды өсіруге қоспайды.",
+      othersPoint2Title: "Нақты өзара әрекет жоқ",
+      othersPoint2Desc:
+        "Көп жағдайда пайдаланушылар тек деректерді көре алады, бірақ өсіруді тікелей басқара алмайды.",
+      advantageTitle: "Qunar артықшылығы",
+      advantagePoint1Title: "Интерактивті фермерлік",
+      advantagePoint1Desc:
+        "Qunar ойынға ұқсас цифрлық интерфейс арқылы нақты фермаға қатысуға мүмкіндік береді.",
+      advantagePoint2Title: "Нақты әсер",
+      advantagePoint2Desc:
+        "Цифрлық ортадағы әрбір әрекет шынайы өсімдіктерге әсер етеді.",
+      advantagePoint3Title: "Барлығына қолжетімді",
+      advantagePoint3Desc:
+        "Платформа фермерлерге де, қалалық тұрғындарға да қолайлы.",
+      advantagePoint4Title: "Ашықтық және сенім",
+      advantagePoint4Desc:
+        "Пайдаланушы өсірудің толық процесін көріп, расталған деректер алады.",
+      othersTag1: "Тек мониторинг",
+      othersTag2: "Басқару жоқ",
+      othersTag3: "Жабдық",
+      advantageTag1: "Ойын + IoT",
+      advantageTag2: "Live сенсорлар",
+      advantageTag3: "Өнім жеткізу",
+    },
+  } as const;
+  const competitionText = competitionCopy[language] ?? competitionCopy.en;
+  const pricingBadge = {
+    en: { entry: "Entry", best: "Best value", advanced: "Advanced", pro: "Pro farms" },
+    ru: { entry: "Старт", best: "Лучшая цена", advanced: "Продвинутый", pro: "Профи" },
+    kk: { entry: "Бастау", best: "Ең тиімді", advanced: "Кеңейтілген", pro: "Профи" },
+  } as const;
+  const badgeText = pricingBadge[language] ?? pricingBadge.en;
+  const waitlistCopy = {
+    en: {
+      title: "Start growing your own food",
+      subtitle: "Join the beta and become part of the first remote farming platform.",
+      ctaPrimary: "Join Beta",
+    },
+    ru: {
+      title: "Начните выращивать свою еду",
+      subtitle: "Присоединяйтесь к бета‑версии и станьте частью первой удаленной фермы.",
+      ctaPrimary: "Присоединиться",
+    },
+    kk: {
+      title: "Өз тағамыңды өсір",
+      subtitle: "Бетаға қосылып, алғашқы қашық ферма қауымдастығына кіріңіз.",
+      ctaPrimary: "Қосылу",
+    },
+  } as const;
+  const waitlistText = waitlistCopy[language] ?? waitlistCopy.en;
+  return (
+    <div className="min-h-screen">
+      <Header />
+      <main className="pt-16">
+            <section className="relative overflow-hidden bg-hero-gradient">
+        <div className="absolute inset-0 bg-dot-grid opacity-40" />
+        <motion.div
+          className="absolute -top-32 right-6 h-80 w-80 rounded-full bg-emerald-400/20 blur-3xl"
+          animate={{ y: [0, -20, 0], x: [0, 12, 0] }}
+          transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute -bottom-24 -left-10 h-72 w-72 rounded-full bg-amber-300/20 blur-3xl"
+          animate={{ y: [0, 18, 0], x: [0, -10, 0] }}
+          transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-white/80 to-transparent dark:from-emerald-950/80" />
+        <div className="container relative z-10 py-24 grid gap-12 lg:grid-cols-2 items-center">
+          <motion.div variants={heroContainer} initial="hidden" animate="show" className="space-y-6">
+            <motion.div
+              variants={heroItem}
+              className="inline-flex items-center gap-2 rounded-full bg-accent px-4 py-2 text-xs uppercase tracking-wide text-muted-foreground"
+            >
+              {t("landing.hero.badge")}
+            </motion.div>
+            <motion.h1 variants={heroItem} className="text-4xl md:text-6xl font-bold text-gradient-primary text-glow">
+              {t("landing.hero.title")}
+            </motion.h1>
+            <motion.p variants={heroItem} className="text-lg text-muted-foreground">
+              {t("landing.hero.subtitle")}
+            </motion.p>
+            <motion.div variants={heroItem} className="flex flex-wrap gap-3">
+                <Button asChild>
+                  <Link to="/register">{t("landing.hero.ctaPrimary")}</Link>
+                </Button>
+                <Button variant="outline" asChild>
+                  <a href="#demo">{t("landing.hero.ctaSecondary")}</a>
+                </Button>
+                <Button variant="ghost" asChild>
+                  <a href="#waitlist">{t("landing.hero.ctaTertiary")}</a>
+                </Button>
+              </motion.div>
+              <motion.div variants={heroItem} className="grid gap-3 sm:grid-cols-3">
+                <div className="rounded-xl bg-white/80 border border-emerald-100 p-3 shadow-card">
+                  <div className="text-xs text-muted-foreground">{t("landing.hero.stats.liveFarmsLabel")}</div>
+                  <div className="text-lg font-semibold">{t("landing.hero.stats.liveFarmsValue")}</div>
+                </div>
+                <div className="rounded-xl bg-white/80 border border-emerald-100 p-3 shadow-card">
+                  <div className="text-xs text-muted-foreground">{t("landing.hero.stats.sensorUptimeLabel")}</div>
+                  <div className="text-lg font-semibold">{t("landing.hero.stats.sensorUptimeValue")}</div>
+                </div>
+                <div className="rounded-xl bg-white/80 border border-emerald-100 p-3 shadow-card">
+                  <div className="text-xs text-muted-foreground">{t("landing.hero.stats.remoteActionsLabel")}</div>
+                  <div className="text-lg font-semibold">{t("landing.hero.stats.remoteActionsValue")}</div>
+                </div>
+              </motion.div>
+              <motion.div variants={heroItem} className="flex items-center gap-3">
+                <div className="h-10 w-10 rounded-full bg-amber-100/90 text-amber-700 flex items-center justify-center shadow-card dark:bg-amber-500/10 dark:text-amber-300">
+                  <Sun className="h-4 w-4" />
+                </div>
+                <div className="h-10 w-10 rounded-full bg-sky-100/90 text-sky-700 flex items-center justify-center shadow-card dark:bg-sky-500/10 dark:text-sky-300">
+                  <Droplets className="h-4 w-4" />
+                </div>
+                <div className="h-10 w-10 rounded-full bg-lime-100/90 text-lime-700 flex items-center justify-center shadow-card dark:bg-lime-500/10 dark:text-lime-300">
+                  <Sprout className="h-4 w-4" />
+                </div>
+              </motion.div>
+            </motion.div>
+          <motion.div
+            variants={heroItem}
+            initial="hidden"
+            animate="show"
+            className="relative bg-white/85 backdrop-blur rounded-2xl p-6 space-y-4 shadow-elevated border border-emerald-100 card-hover"
+            whileInView={{ y: [0, -6, 0] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <div className="absolute -top-4 right-6 rounded-full bg-emerald-600 text-white text-xs font-semibold px-3 py-1 shadow-card">
+              {t("landing.hero.liveTag")}
             </div>
-            <h1 className="text-4xl md:text-6xl font-bold text-gradient-primary">
-              Qunar - Выращивай настоящую еду через игру
-            </h1>
-            <p className="text-lg text-muted-foreground">
-              Управляй реальным садом с телефона. Сажай семена, поливай урожай, отслеживай рост и получай урожай домой.
-            </p>
-            <div className="flex flex-wrap gap-3">
-              <Button asChild>
-                <Link to="/register">Попробовать демо</Link>
-              </Button>
-              <Button variant="outline" asChild>
-                <a href="#demo">Смотреть видео</a>
-              </Button>
-              <Button variant="ghost" asChild>
-                <a href="#waitlist">Присоединиться</a>
-              </Button>
-            </div>
-          </div>
-          <div className="bg-card shadow-elevated rounded-2xl p-6 space-y-4">
-            <h3 className="font-semibold text-lg">How it feels</h3>
-            <div className="grid gap-3 text-sm text-muted-foreground">
-              <div className="rounded-lg border p-4">Play a farming game that controls a real greenhouse.</div>
-              <div className="rounded-lg border p-4">Sensors and cameras stream live data into your dashboard.</div>
-              <div className="rounded-lg border p-4">Harvest is delivered to your home.</div>
-            </div>
-          </div>
+            <Stagger>
+              <h3 className="font-semibold text-lg">{t("landing.hero.cardTitle")}</h3>
+              <p className="text-sm text-muted-foreground">
+                {t("landing.hero.cardDescription")}
+              </p>
+              <div className="grid gap-3 text-sm text-muted-foreground">
+                <div className="rounded-xl border border-emerald-100 bg-white p-4">
+                  <div className="flex items-center justify-between text-xs text-muted-foreground">
+                    <span>{t("landing.hero.metricSoil")}</span>
+                    <span className="font-semibold text-emerald-700">62%</span>
+                  </div>
+                  <div className="mt-2 h-2 rounded-full bg-emerald-100">
+                    <div className="h-2 w-[62%] rounded-full bg-emerald-500 animate-pulse" />
+                  </div>
+                </div>
+                <div className="rounded-xl border border-emerald-100 bg-white p-4">
+                  <div className="flex items-center justify-between text-xs text-muted-foreground">
+                    <span>{t("landing.hero.metricTemp")}</span>
+                    <span className="font-semibold text-emerald-700">24 C</span>
+                  </div>
+                  <div className="mt-2 h-2 rounded-full bg-emerald-100">
+                    <div className="h-2 w-[74%] rounded-full bg-emerald-500 animate-pulse" />
+                  </div>
+                </div>
+                <div className="rounded-xl border border-emerald-100 bg-white p-4">
+                  <div className="flex items-center justify-between text-xs text-muted-foreground">
+                    <span>{t("landing.hero.metricStage")}</span>
+                    <span className="font-semibold text-emerald-700">{t("landing.hero.metricStageValue")}</span>
+                  </div>
+                  <div className="mt-2 flex items-center gap-2 text-xs text-muted-foreground">
+                    <span className="inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+                    {t("landing.hero.metricSync")}
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                <span className="rounded-full bg-emerald-50 px-2 py-1">{t("landing.hero.tagUnity")}</span>
+                <span className="rounded-full bg-emerald-50 px-2 py-1">{t("landing.hero.tagIot")}</span>
+                <span className="rounded-full bg-emerald-50 px-2 py-1">{t("landing.hero.tagAi")}</span>
+              </div>
+            </Stagger>
+            </motion.div>
         </div>
       </section>
 
       <section className="py-16 bg-white" id="problem">
-        <div className="container">
+        <Reveal className="container">
           <div className="grid gap-12 lg:grid-cols-[1.1fr_1fr] items-center">
             <div className="space-y-6">
               <div className="inline-flex items-center gap-2 rounded-full bg-emerald-50 text-emerald-700 text-xs px-3 py-1">
-                Problem
+                {problemText.badge}
               </div>
-              <h2 className="text-3xl font-bold">Why growing food became difficult</h2>
-              <p className="text-muted-foreground">
-                Cities grew faster than gardens. Time shrank, and transparency disappeared.
-              </p>
-              <div className="grid gap-4">
+              <h2 className="text-3xl font-bold">{problemText.title}</h2>
+              <p className="text-muted-foreground">{problemText.subtitle}</p>
+              <Stagger className="grid gap-4">
                 <div className="rounded-2xl bg-card shadow-card p-4 flex gap-4">
-                  <div className="h-11 w-11 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center">
+                  <div className="h-11 w-11 rounded-xl bg-sky-50 text-sky-700 flex items-center justify-center dark:bg-sky-500/10 dark:text-sky-300">
                     <Building2 className="h-5 w-5" />
                   </div>
                   <div>
-                    <div className="font-semibold">No land in cities</div>
-                    <p className="text-sm text-muted-foreground">People live in cities and have no land to grow food.</p>
+                    <div className="font-semibold">{problemText.cardCityTitle}</div>
+                    <p className="text-sm text-muted-foreground">{problemText.cardCityDesc}</p>
                   </div>
                 </div>
                 <div className="rounded-2xl bg-card shadow-card p-4 flex gap-4">
-                  <div className="h-11 w-11 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center">
+                  <div className="h-11 w-11 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center dark:bg-amber-500/10 dark:text-amber-300">
                     <Clock3 className="h-5 w-5" />
                   </div>
                   <div>
-                    <div className="font-semibold">No time for farming</div>
-                    <p className="text-sm text-muted-foreground">Modern life leaves no time for hands-on care.</p>
+                    <div className="font-semibold">{problemText.cardTimeTitle}</div>
+                    <p className="text-sm text-muted-foreground">{problemText.cardTimeDesc}</p>
                   </div>
                 </div>
                 <div className="rounded-2xl bg-card shadow-card p-4 flex gap-4">
-                  <div className="h-11 w-11 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center">
+                  <div className="h-11 w-11 rounded-xl bg-rose-50 text-rose-700 flex items-center justify-center dark:bg-rose-500/10 dark:text-rose-300">
                     <ShieldAlert className="h-5 w-5" />
                   </div>
                   <div>
-                    <div className="font-semibold">No transparency</div>
-                    <p className="text-sm text-muted-foreground">Users want to know how their food is produced.</p>
+                    <div className="font-semibold">{problemText.cardTrustTitle}</div>
+                    <p className="text-sm text-muted-foreground">{problemText.cardTrustDesc}</p>
                   </div>
                 </div>
-              </div>
+              </Stagger>
             </div>
             <div className="grid gap-4">
               <div className="rounded-2xl bg-emerald-600 text-white p-6 shadow-elevated">
-                <div className="text-xs uppercase text-emerald-100">Macro trends</div>
-                <div className="text-lg font-semibold">Three signals prove the timing is right.</div>
+                <div className="text-xs uppercase text-emerald-100">{macroText.title}</div>
+                <div className="text-lg font-semibold">{macroText.subtitle}</div>
               </div>
-              <div className="grid gap-4 sm:grid-cols-2">
+              <Stagger className="grid gap-4 sm:grid-cols-2">
                 <div className="rounded-xl bg-card shadow-card p-4">
                   <div className="flex items-center gap-2 text-emerald-700 font-semibold">
                     <TrendingUp className="h-4 w-4" />
-                    Market growth
+                    {macroText.marketTitle}
                   </div>
-                  <p className="text-sm text-muted-foreground mt-2">Smart agriculture market is growing fast.</p>
+                  <p className="text-sm text-muted-foreground mt-2">{macroText.marketDesc}</p>
                 </div>
                 <div className="rounded-xl bg-card shadow-card p-4">
                   <div className="flex items-center gap-2 text-emerald-700 font-semibold">
                     <Globe2 className="h-4 w-4" />
-                    Urbanization
+                    {macroText.urbanTitle}
                   </div>
-                  <p className="text-sm text-muted-foreground mt-2">Urbanization is increasing globally.</p>
+                  <p className="text-sm text-muted-foreground mt-2">{macroText.urbanDesc}</p>
                 </div>
                 <div className="rounded-xl bg-card shadow-card p-4">
                   <div className="flex items-center gap-2 text-emerald-700 font-semibold">
                     <Leaf className="h-4 w-4" />
-                    Organic demand
+                    {macroText.organicTitle}
                   </div>
-                  <p className="text-sm text-muted-foreground mt-2">Demand for organic, traceable food keeps rising.</p>
+                  <p className="text-sm text-muted-foreground mt-2">{macroText.organicDesc}</p>
                 </div>
                 <div className="rounded-xl bg-card shadow-card p-4">
                   <div className="flex items-center gap-2 text-emerald-700 font-semibold">
                     <BadgeCheck className="h-4 w-4" />
-                    Trust gap
+                    {macroText.trustTitle}
                   </div>
-                  <p className="text-sm text-muted-foreground mt-2">Consumers want verified data and transparency.</p>
+                  <p className="text-sm text-muted-foreground mt-2">{macroText.trustDesc}</p>
                 </div>
-              </div>
+              </Stagger>
             </div>
           </div>
-        </div>
+        </Reveal>
       </section>
 
       <section className="py-16 bg-emerald-50/70" id="solution">
-        <div className="container grid gap-12 lg:grid-cols-2 items-center">
+        <Reveal className="container grid gap-12 lg:grid-cols-2 items-center">
           <div className="space-y-6">
             <div className="inline-flex items-center gap-2 rounded-full bg-white/80 text-emerald-700 text-xs px-3 py-1">
-              Solution
+              {t("landing.solution.badge")}
             </div>
-            <h2 className="text-3xl font-bold">Qunar connects the digital world with real farming</h2>
-            <p className="text-muted-foreground">
-              Users grow real vegetables remotely through a game interface. Every action in the game controls real hardware.
-            </p>
+            <h2 className="text-3xl font-bold">{t("landing.solution.title")}</h2>
+            <p className="text-muted-foreground">{t("landing.solution.subtitle")}</p>
             <div className="rounded-2xl bg-white/80 border border-emerald-100 p-4 text-sm text-muted-foreground">
-              Аренда фермы дает доступ к управлению, а семена и растения покупаются отдельно.
+              {t("landing.solution.note")}
             </div>
           </div>
           <div className="relative">
             <div className="hidden md:block absolute left-5 top-2 bottom-2 w-px bg-emerald-200" />
-            <div className="space-y-4">
+            <Stagger className="space-y-4">
               <div className="relative flex gap-4">
                 <div className="h-10 w-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-semibold">1</div>
                 <div className="rounded-2xl bg-white shadow-card border border-emerald-100 p-4">
                   <div className="flex items-center gap-2 text-emerald-700 font-semibold">
                     <Sprout className="h-4 w-4" />
-                    Plant seeds in the app
+                    {t("landing.solution.step1Title")}
                   </div>
-                  <p className="text-sm text-muted-foreground mt-2">Choose crops and start your remote plot.</p>
+                  <p className="text-sm text-muted-foreground mt-2">{t("landing.solution.step1Desc")}</p>
                 </div>
               </div>
               <div className="relative flex gap-4">
@@ -198,9 +498,9 @@ const Index = () => (
                 <div className="rounded-2xl bg-white shadow-card border border-emerald-100 p-4">
                   <div className="flex items-center gap-2 text-emerald-700 font-semibold">
                     <Droplets className="h-4 w-4" />
-                    Water plants through the game
+                    {t("landing.solution.step2Title")}
                   </div>
-                  <p className="text-sm text-muted-foreground mt-2">Automations and manual actions sync with hardware.</p>
+                  <p className="text-sm text-muted-foreground mt-2">{t("landing.solution.step2Desc")}</p>
                 </div>
               </div>
               <div className="relative flex gap-4">
@@ -208,9 +508,9 @@ const Index = () => (
                 <div className="rounded-2xl bg-white shadow-card border border-emerald-100 p-4">
                   <div className="flex items-center gap-2 text-emerald-700 font-semibold">
                     <Activity className="h-4 w-4" />
-                    Sensors monitor the environment
+                    {t("landing.solution.step3Title")}
                   </div>
-                  <p className="text-sm text-muted-foreground mt-2">Soil and climate data stream into your dashboard.</p>
+                  <p className="text-sm text-muted-foreground mt-2">{t("landing.solution.step3Desc")}</p>
                 </div>
               </div>
               <div className="relative flex gap-4">
@@ -218,9 +518,9 @@ const Index = () => (
                 <div className="rounded-2xl bg-white shadow-card border border-emerald-100 p-4">
                   <div className="flex items-center gap-2 text-emerald-700 font-semibold">
                     <Camera className="h-4 w-4" />
-                    Camera shows plant growth
+                    {t("landing.solution.step4Title")}
                   </div>
-                  <p className="text-sm text-muted-foreground mt-2">Live photos and time-lapses prove progress.</p>
+                  <p className="text-sm text-muted-foreground mt-2">{t("landing.solution.step4Desc")}</p>
                 </div>
               </div>
               <div className="relative flex gap-4">
@@ -228,167 +528,102 @@ const Index = () => (
                 <div className="rounded-2xl bg-white shadow-card border border-emerald-100 p-4">
                   <div className="flex items-center gap-2 text-emerald-700 font-semibold">
                     <Truck className="h-4 w-4" />
-                    Harvest delivered to your home
+                    {t("landing.solution.step5Title")}
                   </div>
-                  <p className="text-sm text-muted-foreground mt-2">Fresh, traceable produce shipped to you.</p>
+                  <p className="text-sm text-muted-foreground mt-2">{t("landing.solution.step5Desc")}</p>
                 </div>
               </div>
-            </div>
+            </Stagger>
           </div>
-        </div>
+        </Reveal>
       </section>
 
       <section className="py-16 bg-white" id="technology">
-        <div className="container">
+        <Reveal className="container">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-8">
-            <h2 className="text-3xl font-bold">How the technology works</h2>
-            <div className="text-sm text-muted-foreground">Hardware, software, and AI in one loop.</div>
+            <h2 className="text-3xl font-bold">{t("landing.technology.title")}</h2>
+            <div className="text-sm text-muted-foreground">{t("landing.technology.subtitle")}</div>
           </div>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          <Stagger className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             <div className="rounded-2xl bg-card shadow-card p-6 border border-emerald-100">
               <div className="flex items-center gap-2 text-emerald-700 font-semibold">
                 <Cpu className="h-5 w-5" />
-                IoT Farm
+                {t("landing.technology.iotTitle")}
               </div>
               <p className="text-sm text-muted-foreground mt-3">
-                ESP32 sensors, soil moisture, temperature, automated irrigation.
+                {t("landing.technology.iotDesc")}
               </p>
               <div className="flex flex-wrap gap-2 mt-4 text-xs text-muted-foreground">
-                <span className="rounded-full bg-emerald-50 px-2 py-1">ESP32</span>
-                <span className="rounded-full bg-emerald-50 px-2 py-1">Moisture</span>
-                <span className="rounded-full bg-emerald-50 px-2 py-1">Irrigation</span>
+                <span className="rounded-full bg-emerald-50 px-2 py-1">{t("landing.technology.iotTag1")}</span>
+                <span className="rounded-full bg-emerald-50 px-2 py-1">{t("landing.technology.iotTag2")}</span>
+                <span className="rounded-full bg-emerald-50 px-2 py-1">{t("landing.technology.iotTag3")}</span>
               </div>
             </div>
             <div className="rounded-2xl bg-card shadow-card p-6 border border-emerald-100">
               <div className="flex items-center gap-2 text-emerald-700 font-semibold">
                 <Gamepad2 className="h-5 w-5" />
-                Game Platform
+                {t("landing.technology.gameTitle")}
               </div>
               <p className="text-sm text-muted-foreground mt-3">
-                Unity 3D simulation, notifications, interactive planting.
+                {t("landing.technology.gameDesc")}
               </p>
               <div className="flex flex-wrap gap-2 mt-4 text-xs text-muted-foreground">
-                <span className="rounded-full bg-emerald-50 px-2 py-1">Unity 3D</span>
-                <span className="rounded-full bg-emerald-50 px-2 py-1">Gameplay</span>
-                <span className="rounded-full bg-emerald-50 px-2 py-1">Alerts</span>
+                <span className="rounded-full bg-emerald-50 px-2 py-1">{t("landing.technology.gameTag1")}</span>
+                <span className="rounded-full bg-emerald-50 px-2 py-1">{t("landing.technology.gameTag2")}</span>
+                <span className="rounded-full bg-emerald-50 px-2 py-1">{t("landing.technology.gameTag3")}</span>
               </div>
             </div>
             <div className="rounded-2xl bg-card shadow-card p-6 border border-emerald-100">
               <div className="flex items-center gap-2 text-emerald-700 font-semibold">
                 <Bot className="h-5 w-5" />
-                AI Assistant
+                {t("landing.technology.aiTitle")}
               </div>
               <p className="text-sm text-muted-foreground mt-3">
-                Plant care advice, tips, and gamified NPC guidance.
+                {t("landing.technology.aiDesc")}
               </p>
               <div className="flex flex-wrap gap-2 mt-4 text-xs text-muted-foreground">
-                <span className="rounded-full bg-emerald-50 px-2 py-1">Recommendations</span>
-                <span className="rounded-full bg-emerald-50 px-2 py-1">Forecasts</span>
-                <span className="rounded-full bg-emerald-50 px-2 py-1">Guidance</span>
+                <span className="rounded-full bg-emerald-50 px-2 py-1">{t("landing.technology.aiTag1")}</span>
+                <span className="rounded-full bg-emerald-50 px-2 py-1">{t("landing.technology.aiTag2")}</span>
+                <span className="rounded-full bg-emerald-50 px-2 py-1">{t("landing.technology.aiTag3")}</span>
               </div>
             </div>
             <div className="rounded-2xl bg-card shadow-card p-6 border border-emerald-100">
               <div className="flex items-center gap-2 text-emerald-700 font-semibold">
                 <Camera className="h-5 w-5" />
-                Live Monitoring
+                {t("landing.technology.liveTitle")}
               </div>
               <p className="text-sm text-muted-foreground mt-3">
-                Camera stream, growth photos, sensor charts.
+                {t("landing.technology.liveDesc")}
               </p>
               <div className="flex flex-wrap gap-2 mt-4 text-xs text-muted-foreground">
-                <span className="rounded-full bg-emerald-50 px-2 py-1">Live feed</span>
-                <span className="rounded-full bg-emerald-50 px-2 py-1">Charts</span>
-                <span className="rounded-full bg-emerald-50 px-2 py-1">History</span>
+                <span className="rounded-full bg-emerald-50 px-2 py-1">{t("landing.technology.liveTag1")}</span>
+                <span className="rounded-full bg-emerald-50 px-2 py-1">{t("landing.technology.liveTag2")}</span>
+                <span className="rounded-full bg-emerald-50 px-2 py-1">{t("landing.technology.liveTag3")}</span>
               </div>
             </div>
-          </div>
-        </div>
+          </Stagger>
+        </Reveal>
       </section>
 
-
-      <section className="py-16 bg-white" id="game">
-        <div className="container space-y-8">
-          <div className="grid gap-8 lg:grid-cols-[1.1fr_1fr]">
-            <div className="rounded-2xl bg-card shadow-card p-6 border border-emerald-100">
-              <div className="flex items-center gap-2 text-emerald-700 font-semibold">
-                <Gamepad2 className="h-5 w-5" />
-                Game Experience
-              </div>
-              <p className="text-muted-foreground mt-3">Play, grow, and monitor your crops like a real farmer.</p>
-              <div className="grid gap-3 mt-5 text-sm">
-                <div className="flex items-center gap-3 rounded-xl bg-white p-4 shadow-card">
-                  <Sprout className="h-4 w-4 text-emerald-600" />
-                  Buy your garden plot
-                </div>
-                <div className="flex items-center gap-3 rounded-xl bg-white p-4 shadow-card">
-                  <BookOpen className="h-4 w-4 text-emerald-600" />
-                  Plant seeds and track growth
-                </div>
-                <div className="flex items-center gap-3 rounded-xl bg-white p-4 shadow-card">
-                  <Droplets className="h-4 w-4 text-emerald-600" />
-                  Water plants through gameplay
-                </div>
-                <div className="flex items-center gap-3 rounded-xl bg-white p-4 shadow-card">
-                  <BarChart3 className="h-4 w-4 text-emerald-600" />
-                  Monitor temperature and soil moisture
-                </div>
-                <div className="flex items-center gap-3 rounded-xl bg-white p-4 shadow-card">
-                  <Bot className="h-4 w-4 text-emerald-600" />
-                  Chat with an AI gardener
-                </div>
-              </div>
-              <div className="flex flex-wrap gap-2 mt-5 text-xs text-muted-foreground">
-                <span className="rounded-full bg-emerald-50 px-2 py-1">Unity 3D</span>
-                <span className="rounded-full bg-emerald-50 px-2 py-1">Live feedback</span>
-                <span className="rounded-full bg-emerald-50 px-2 py-1">Gamified tasks</span>
-              </div>
-            </div>
-            <div className="rounded-2xl bg-emerald-600 text-white shadow-elevated p-6">
-              <div className="flex items-center gap-2 text-emerald-100 font-semibold">
-                <Cpu className="h-5 w-5" />
-                Real Farm System
-              </div>
-              <p className="text-emerald-50 mt-3">
-                Our physical prototype includes soil moisture sensors, temperature sensors, an irrigation pump, phytolamp, and camera monitoring.
-              </p>
-              <div className="grid gap-3 mt-5 text-sm">
-                <div className="rounded-xl bg-emerald-500/40 p-3">Soil moisture sensor</div>
-                <div className="rounded-xl bg-emerald-500/40 p-3">Temperature sensor</div>
-                <div className="rounded-xl bg-emerald-500/40 p-3">Irrigation pump + phytolamp</div>
-                <div className="rounded-xl bg-emerald-500/40 p-3">Camera monitoring</div>
-              </div>
-              <div className="mt-5 rounded-xl bg-white/15 p-4 text-sm text-emerald-50">
-                Connected to cloud server and the game platform for real-time control.
-              </div>
-            </div>
+      <section className="py-16 bg-emerald-50/70" id="demo">
+        <Reveal className="container grid gap-10 lg:grid-cols-2 items-center">
+          <div className="space-y-4">
+              <h2 className="text-3xl font-bold">{t("landing.demo.title")}</h2>
+              <p className="text-muted-foreground">{t("landing.demo.subtitle")}</p>
+              <Button asChild>
+                <a href="https://youtu.be/zWNrd3ZX28w" target="_blank" rel="noreferrer">{t("landing.demo.button")}</a>
+              </Button>
           </div>
-
-          <div className="rounded-2xl bg-white/90 border border-emerald-100 p-6">
-            <div className="text-sm text-muted-foreground mb-3">End-to-end flow</div>
-            <div className="flex flex-wrap items-center gap-3 text-sm">
-              <span className="rounded-full bg-emerald-50 px-3 py-1">Player</span>
-              <ArrowRight className="h-4 w-4 text-emerald-400" />
-              <span className="rounded-full bg-emerald-50 px-3 py-1">Unity / AI</span>
-              <ArrowRight className="h-4 w-4 text-emerald-400" />
-              <span className="rounded-full bg-emerald-50 px-3 py-1">Cloud</span>
-              <ArrowRight className="h-4 w-4 text-emerald-400" />
-              <span className="rounded-full bg-emerald-50 px-3 py-1">Greenhouse</span>
-              <ArrowRight className="h-4 w-4 text-emerald-400" />
-              <span className="rounded-full bg-emerald-50 px-3 py-1">Data + Harvest</span>
-            </div>
-          </div>
-        </div>
+        </Reveal>
       </section>
 
       <section className="py-16 bg-emerald-50/70" id="business">
         <div className="container">
           <div className="flex flex-col gap-3 mb-8">
-            <h2 className="text-3xl font-bold">Тарифы Qunar - аренда фермы по подписке</h2>
-            <p className="text-muted-foreground">
-              Принцип: вы арендуете место на нашей ферме на месяц, управляете растениями через платформу, а семена и растения покупаете отдельно.
-            </p>
+            <h2 className="text-3xl font-bold">{t("pricing.title")}</h2>
+            <p className="text-muted-foreground">{t("pricing.subtitle")}</p>
             <div className="rounded-xl bg-white/70 border border-emerald-100 p-4 text-sm text-muted-foreground">
-              Важно: растения и семена оплачиваются отдельно от подписки.
+              {t("pricing.note")}
             </div>
           </div>
           <div className="md:hidden space-y-4">
@@ -398,7 +633,7 @@ const Index = () => (
                   <div className="text-xs uppercase text-muted-foreground">Simple</div>
                   <div className="text-lg font-semibold">4 990 ₸ / мес</div>
                 </div>
-                <span className="rounded-full bg-emerald-100 text-emerald-700 text-xs px-2 py-1">Entry</span>
+                <span className="rounded-full bg-emerald-100 text-emerald-700 text-xs px-2 py-1">{badgeText.entry}</span>
               </div>
               <p className="text-sm text-muted-foreground">Малые эксперименты</p>
               <ul className="space-y-2 text-sm">
@@ -418,7 +653,7 @@ const Index = () => (
                   <div className="text-xs uppercase text-emerald-100">Standard</div>
                   <div className="text-xl font-semibold">9 990 ₸ / мес</div>
                 </div>
-                <span className="rounded-full bg-white text-emerald-700 text-xs px-2 py-1">Best value</span>
+                <span className="rounded-full bg-white text-emerald-700 text-xs px-2 py-1">{badgeText.best}</span>
               </div>
               <p className="text-sm text-emerald-100">Активные пользователи</p>
               <ul className="space-y-2 text-sm">
@@ -441,7 +676,7 @@ const Index = () => (
                   <div className="text-xs uppercase text-muted-foreground">Premium</div>
                   <div className="text-lg font-semibold">19 990 ₸ / мес</div>
                 </div>
-                <span className="rounded-full bg-emerald-100 text-emerald-700 text-xs px-2 py-1">Advanced</span>
+                <span className="rounded-full bg-emerald-100 text-emerald-700 text-xs px-2 py-1">{badgeText.advanced}</span>
               </div>
               <p className="text-sm text-muted-foreground">Крупные участки</p>
               <ul className="space-y-2 text-sm">
@@ -463,7 +698,7 @@ const Index = () => (
                   <div className="text-xs uppercase text-muted-foreground">Pro</div>
                   <div className="text-lg font-semibold">39 990 ₸ / мес</div>
                 </div>
-                <span className="rounded-full bg-emerald-100 text-emerald-700 text-xs px-2 py-1">Pro farms</span>
+                <span className="rounded-full bg-emerald-100 text-emerald-700 text-xs px-2 py-1">{badgeText.pro}</span>
               </div>
               <p className="text-sm text-muted-foreground">Профессиональные фермеры</p>
               <ul className="space-y-2 text-sm">
@@ -495,7 +730,7 @@ const Index = () => (
                   <td className="p-4 align-top border-t">
                     <div className="flex items-center gap-2">
                       <span className="font-semibold">Simple</span>
-                      <span className="rounded-full bg-emerald-100 text-emerald-700 text-xs px-2 py-1">Entry</span>
+                      <span className="rounded-full bg-emerald-100 text-emerald-700 text-xs px-2 py-1">{badgeText.entry}</span>
                     </div>
                     <div className="text-sm text-muted-foreground">Малые эксперименты</div>
                   </td>
@@ -520,7 +755,7 @@ const Index = () => (
                   <td className="p-4 align-top border-t border-emerald-500/40">
                     <div className="flex items-center gap-2">
                       <span className="font-semibold text-white">Standard</span>
-                      <span className="rounded-full bg-white text-emerald-700 text-xs px-2 py-1">Best value</span>
+                      <span className="rounded-full bg-white text-emerald-700 text-xs px-2 py-1">{badgeText.best}</span>
                     </div>
                     <div className="text-sm text-emerald-100">Активные пользователи</div>
                   </td>
@@ -576,7 +811,7 @@ const Index = () => (
                   <td className="p-4 align-top border-t">
                     <div className="flex items-center gap-2">
                       <span className="font-semibold">Pro</span>
-                      <span className="rounded-full bg-emerald-100 text-emerald-700 text-xs px-2 py-1">Pro farms</span>
+                      <span className="rounded-full bg-emerald-100 text-emerald-700 text-xs px-2 py-1">{badgeText.pro}</span>
                     </div>
                     <div className="text-sm text-muted-foreground">Профессиональные фермеры</div>
                   </td>
@@ -670,129 +905,94 @@ const Index = () => (
       </section>
 
       <section className="py-16 bg-white" id="market">
-        <div className="container">
-          <div className="grid gap-10 lg:grid-cols-[1.1fr_1fr] items-center">
-            <div className="space-y-5">
-              <div className="inline-flex items-center gap-2 rounded-full bg-emerald-50 text-emerald-700 text-xs px-3 py-1">
-                Market Opportunity
-              </div>
-              <h2 className="text-3xl font-bold">Smart agriculture meets gaming scale</h2>
-              <p className="text-muted-foreground">
-                Smart agriculture is growing, the game industry keeps expanding, and demand for transparent food is rising.
-              </p>
-              <div className="flex flex-wrap gap-3">
-                <span className="rounded-full border border-emerald-200 px-3 py-1 text-xs text-muted-foreground">Agrotech</span>
-                <span className="rounded-full border border-emerald-200 px-3 py-1 text-xs text-muted-foreground">Gaming</span>
-                <span className="rounded-full border border-emerald-200 px-3 py-1 text-xs text-muted-foreground">FoodTech</span>
-              </div>
+        <Reveal className="container space-y-8">
+          <div className="space-y-5">
+            <div className="inline-flex items-center gap-2 rounded-full bg-emerald-50 text-emerald-700 text-xs px-3 py-1">
+              {competitionText.title}
             </div>
-            <div className="grid gap-4">
-              <div className="rounded-2xl bg-emerald-600 text-white p-6 shadow-elevated">
-                <div className="text-xs uppercase text-emerald-100">Position</div>
-                <div className="text-lg font-semibold">Qunar sits between Agrotech, Gaming, and FoodTech.</div>
-              </div>
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div className="rounded-xl bg-card shadow-card p-4">
-                  <div className="flex items-center gap-2 text-emerald-700 font-semibold">
-                    <LineChart className="h-4 w-4" />
-                    Growth
-                  </div>
-                  <p className="text-sm text-muted-foreground mt-2">Rising demand for smart agriculture and automation.</p>
-                </div>
-                <div className="rounded-xl bg-card shadow-card p-4">
-                  <div className="flex items-center gap-2 text-emerald-700 font-semibold">
-                    <Activity className="h-4 w-4" />
-                    Engagement
-                  </div>
-                  <p className="text-sm text-muted-foreground mt-2">Gaming habits make remote farming intuitive.</p>
-                </div>
-                <div className="rounded-xl bg-card shadow-card p-4">
-                  <div className="flex items-center gap-2 text-emerald-700 font-semibold">
-                    <BadgeCheck className="h-4 w-4" />
-                    Transparency
-                  </div>
-                  <p className="text-sm text-muted-foreground mt-2">Consumers want real data about their food.</p>
-                </div>
-                <div className="rounded-xl bg-card shadow-card p-4">
-                  <div className="flex items-center gap-2 text-emerald-700 font-semibold">
-                    <Sprout className="h-4 w-4" />
-                    Access
-                  </div>
-                  <p className="text-sm text-muted-foreground mt-2">Urban users can grow food without land.</p>
-                </div>
-              </div>
-            </div>
+            <h2 className="text-3xl font-bold">{competitionText.title}</h2>
+            <p className="text-muted-foreground">{competitionText.subtitle}</p>
           </div>
-        </div>
-      </section>
 
-      <section className="py-16 bg-emerald-50/70" id="roadmap">
-        <div className="container">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-8">
-            <h2 className="text-3xl font-bold">Roadmap</h2>
-            <div className="text-sm text-muted-foreground">From prototype to global farming network.</div>
-          </div>
-          <div className="grid gap-8 lg:grid-cols-2">
-            <div className="relative space-y-6">
-              <div className="absolute left-5 top-2 bottom-2 w-px bg-emerald-200" />
-              <div className="relative flex gap-4">
-                <div className="h-10 w-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-semibold">1</div>
-                <div className="rounded-2xl bg-white/90 border border-emerald-100 p-4 shadow-card">
-                  <div className="text-xs uppercase text-emerald-700">Stage 1</div>
-                  <div className="font-semibold">MVP greenhouse</div>
-                  <p className="text-sm text-muted-foreground mt-1">Sensors, irrigation, and live camera prototype.</p>
+          <div className="grid gap-6 lg:grid-cols-2">
+            <div className="rounded-2xl bg-card shadow-card p-6 border border-emerald-100">
+              <div className="inline-flex items-center gap-2 rounded-full bg-emerald-50 text-emerald-700 text-xs px-3 py-1">
+                {competitionText.othersTitle}
+              </div>
+              <h3 className="text-2xl font-semibold mt-3">{competitionText.othersTitle}</h3>
+              <p className="text-sm text-muted-foreground mt-2">{competitionText.othersIntro}</p>
+              <div className="mt-5 space-y-4 text-sm">
+                <div className="rounded-xl border border-emerald-100 bg-white/70 p-4">
+                  <div className="font-semibold">{competitionText.othersPoint1Title}</div>
+                  <p className="text-muted-foreground mt-1">{competitionText.othersPoint1Desc}</p>
+                </div>
+                <div className="rounded-xl border border-emerald-100 bg-white/70 p-4">
+                  <div className="font-semibold">{competitionText.othersPoint2Title}</div>
+                  <p className="text-muted-foreground mt-1">{competitionText.othersPoint2Desc}</p>
                 </div>
               </div>
-              <div className="relative flex gap-4">
-                <div className="h-10 w-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-semibold">2</div>
-                <div className="rounded-2xl bg-white/90 border border-emerald-100 p-4 shadow-card">
-                  <div className="text-xs uppercase text-emerald-700">Stage 2</div>
-                  <div className="font-semibold">Web dashboard</div>
-                  <p className="text-sm text-muted-foreground mt-1">Full control center for farms, plants, and sensors.</p>
+              <div className="mt-5 flex flex-wrap gap-2 text-xs text-muted-foreground">
+                <span className="rounded-full border border-emerald-200 px-3 py-1">{competitionText.othersTag1}</span>
+                <span className="rounded-full border border-emerald-200 px-3 py-1">{competitionText.othersTag2}</span>
+                <span className="rounded-full border border-emerald-200 px-3 py-1">{competitionText.othersTag3}</span>
+              </div>
+            </div>
+
+            <div className="relative overflow-hidden rounded-2xl bg-emerald-600 text-white shadow-elevated p-6">
+              <div className="absolute inset-0 bg-orbit opacity-70" />
+              <div className="relative">
+                <div className="inline-flex items-center gap-2 rounded-full bg-white/15 text-emerald-50 text-xs px-3 py-1">
+                  {competitionText.advantageTitle}
+                </div>
+                <h3 className="text-2xl font-semibold mt-3">{competitionText.advantageTitle}</h3>
+                <p className="text-sm text-emerald-50 mt-2">{competitionText.subtitle}</p>
+                <div className="mt-5 grid gap-3">
+                  <div className="rounded-xl bg-white/10 p-4 border border-white/10">
+                    <div className="font-semibold">{competitionText.advantagePoint1Title}</div>
+                    <p className="text-emerald-50 mt-1">{competitionText.advantagePoint1Desc}</p>
+                  </div>
+                  <div className="rounded-xl bg-white/10 p-4 border border-white/10">
+                    <div className="font-semibold">{competitionText.advantagePoint2Title}</div>
+                    <p className="text-emerald-50 mt-1">{competitionText.advantagePoint2Desc}</p>
+                  </div>
+                  <div className="rounded-xl bg-white/10 p-4 border border-white/10">
+                    <div className="font-semibold">{competitionText.advantagePoint3Title}</div>
+                    <p className="text-emerald-50 mt-1">{competitionText.advantagePoint3Desc}</p>
+                  </div>
+                  <div className="rounded-xl bg-white/10 p-4 border border-white/10">
+                    <div className="font-semibold">{competitionText.advantagePoint4Title}</div>
+                    <p className="text-emerald-50 mt-1">{competitionText.advantagePoint4Desc}</p>
+                  </div>
+                </div>
+                <div className="mt-5 flex flex-wrap gap-2 text-xs">
+                  <span className="rounded-full bg-white/15 px-3 py-1">{competitionText.advantageTag1}</span>
+                  <span className="rounded-full bg-white/15 px-3 py-1">{competitionText.advantageTag2}</span>
+                  <span className="rounded-full bg-white/15 px-3 py-1">{competitionText.advantageTag3}</span>
                 </div>
               </div>
             </div>
-            <div className="relative space-y-6">
-              <div className="absolute left-5 top-2 bottom-2 w-px bg-emerald-200" />
-              <div className="relative flex gap-4">
-                <div className="h-10 w-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-semibold">3</div>
-                <div className="rounded-2xl bg-white/90 border border-emerald-100 p-4 shadow-card">
-                  <div className="text-xs uppercase text-emerald-700">Stage 3</div>
-                  <div className="font-semibold">Full farm network</div>
-                  <p className="text-sm text-muted-foreground mt-1">Multiple farms connected with unified analytics.</p>
-                </div>
-              </div>
-              <div className="relative flex gap-4">
-                <div className="h-10 w-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-semibold">4</div>
-                <div className="rounded-2xl bg-white/90 border border-emerald-100 p-4 shadow-card">
-                  <div className="text-xs uppercase text-emerald-700">Stage 4</div>
-                  <div className="font-semibold">Global remote farming</div>
-                  <p className="text-sm text-muted-foreground mt-1">Worldwide access to real farms via the platform.</p>
-                </div>
-              </div>
-            </div>
           </div>
-        </div>
+        </Reveal>
       </section>
 
       <section className="py-16 bg-white" id="team">
-        <div className="container">
+        <Reveal className="container">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
             <div>
-              <h2 className="text-3xl font-bold">Team</h2>
-              <p className="text-muted-foreground">Core founders driving Qunar forward.</p>
+              <h2 className="text-3xl font-bold">{t("landing.team.title")}</h2>
+              <p className="text-muted-foreground">{t("landing.team.subtitle")}</p>
             </div>
             <div className="inline-flex items-center gap-2 rounded-full bg-emerald-50 text-emerald-700 text-xs px-3 py-1">
-              Founding team
+              {t("landing.team.badge")}
             </div>
           </div>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          <Stagger className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             <div className="rounded-2xl bg-card shadow-card p-5">
               <div className="flex items-center gap-3">
                 <div className="h-12 w-12 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-semibold">GZ</div>
                 <div>
                   <div className="font-semibold">Gulnur Zhumakhan</div>
-                  <div className="text-sm text-muted-foreground">Co-founder</div>
+                  <div className="text-sm text-muted-foreground">{t("landing.team.roleCofounder")}</div>
                 </div>
               </div>
             </div>
@@ -801,31 +1001,29 @@ const Index = () => (
                 <div className="h-12 w-12 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-semibold">FT</div>
                 <div>
                   <div className="font-semibold">Fariza Turebayeva</div>
-                  <div className="text-sm text-muted-foreground">Co-founder</div>
+                  <div className="text-sm text-muted-foreground">{t("landing.team.roleFounder")}</div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+          </Stagger>
+        </Reveal>
       </section>
 
       <section className="py-16 bg-emerald-50/70" id="waitlist">
-        <div className="container text-center space-y-4">
-          <h2 className="text-3xl font-bold">Start Growing Your Own Food</h2>
-          <p className="text-muted-foreground">Join the beta and get early access to Qunar.</p>
+        <Reveal className="container text-center space-y-4">
+          <h2 className="text-3xl font-bold">{waitlistText.title}</h2>
+          <p className="text-muted-foreground">{waitlistText.subtitle}</p>
           <div className="flex flex-wrap justify-center gap-3">
             <Button asChild>
-              <Link to="/register">Join Beta</Link>
-            </Button>
-            <Button variant="outline" asChild>
-              <a href="mailto:hello@qunar.farm">Contact Us</a>
+              <Link to="/register">{waitlistText.ctaPrimary}</Link>
             </Button>
           </div>
-        </div>
+        </Reveal>
       </section>
     </main>
-    <Footer />
-  </div>
-);
+      <Footer />
+    </div>
+  );
+};
 
 export default Index;

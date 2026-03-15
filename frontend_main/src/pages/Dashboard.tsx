@@ -4,9 +4,11 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { apiGet, API_PREFIX } from "@/api/client";
 import { useAuth } from "@/context/AuthContext";
+import { useI18n } from "@/context/I18nContext";
 
 const Dashboard = () => {
   const { user } = useAuth();
+  const { t } = useI18n();
   const [farms, setFarms] = useState<any[]>([]);
   const [plants, setPlants] = useState<any[]>([]);
   const [sensors, setSensors] = useState<any[]>([]);
@@ -34,7 +36,7 @@ const Dashboard = () => {
       setPlants(plantsResp.data || []);
       setSensors(sensorsResp.data || []);
     } catch (err: any) {
-      setError(err.message || "Failed to load dashboard");
+      setError(err.message || t("common.error"));
     } finally {
       setLoading(false);
     }
@@ -51,51 +53,53 @@ const Dashboard = () => {
         <div className="container py-8">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
             <div>
-              <h1 className="text-3xl font-bold">Dashboard</h1>
-              <p className="text-muted-foreground">Welcome back, {user?.full_name || user?.email}</p>
-              <p className="text-xs text-muted-foreground">Нажмите Reload, чтобы подтянуть актуальные данные.</p>
+              <h1 className="text-3xl font-bold">{t("dashboardPage.title")}</h1>
+              <p className="text-muted-foreground">{t("dashboardPage.welcome", { name: user?.full_name || user?.email || "" })}</p>
+              <p className="text-xs text-muted-foreground">{t("dashboardPage.hintReload")}</p>
             </div>
             <Button onClick={loadDashboard} disabled={loading}>
-              {loading ? "Loading..." : "Reload"}
+              {loading ? t("common.loading") : t("common.reload")}
             </Button>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
             <div className="p-4 rounded-xl bg-card shadow-card">
-              <div className="text-sm text-muted-foreground">Farms</div>
+              <div className="text-sm text-muted-foreground">{t("dashboardPage.totalsFarms")}</div>
               <div className="text-2xl font-bold">{totals.farms}</div>
             </div>
             <div className="p-4 rounded-xl bg-card shadow-card">
-              <div className="text-sm text-muted-foreground">Plants</div>
+              <div className="text-sm text-muted-foreground">{t("dashboardPage.totalsPlants")}</div>
               <div className="text-2xl font-bold">{totals.plants}</div>
             </div>
             <div className="p-4 rounded-xl bg-card shadow-card">
-              <div className="text-sm text-muted-foreground">Sensors</div>
+              <div className="text-sm text-muted-foreground">{t("dashboardPage.totalsSensors")}</div>
               <div className="text-2xl font-bold">{totals.sensors}</div>
             </div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div className="p-5 rounded-xl bg-card shadow-card">
-              <h2 className="font-semibold mb-4">Your Farms</h2>
-              {farms.length === 0 && <div className="text-sm text-muted-foreground">No farms yet.</div>}
+              <h2 className="font-semibold mb-4">{t("dashboardPage.yourFarms")}</h2>
+              {farms.length === 0 && <div className="text-sm text-muted-foreground">{t("dashboardPage.noFarms")}</div>}
               <div className="space-y-3">
                 {farms.map((farm) => (
                   <div key={farm.id} className="border rounded-lg p-3">
                     <div className="font-semibold">{farm.name}</div>
-                    <div className="text-sm text-muted-foreground">Size: {farm.size}</div>
+                    <div className="text-sm text-muted-foreground">{t("dashboardPage.size")}: {farm.size}</div>
                   </div>
                 ))}
               </div>
             </div>
             <div className="p-5 rounded-xl bg-card shadow-card">
-              <h2 className="font-semibold mb-4">Latest Plants</h2>
-              {plants.length === 0 && <div className="text-sm text-muted-foreground">No plants yet.</div>}
+              <h2 className="font-semibold mb-4">{t("dashboardPage.latestPlants")}</h2>
+              {plants.length === 0 && <div className="text-sm text-muted-foreground">{t("dashboardPage.noPlants")}</div>}
               <div className="space-y-3">
                 {plants.slice(0, 6).map((plant) => (
                   <div key={plant.id} className="border rounded-lg p-3">
                     <div className="font-semibold">{plant.crop_type}</div>
-                    <div className="text-sm text-muted-foreground">Progress: {plant.progress}% · {plant.status}</div>
+                    <div className="text-sm text-muted-foreground">
+                      {t("dashboardPage.progress")}: {plant.progress}% · {t(`plantsPage.status.${plant.status}`) === `plantsPage.status.${plant.status}` ? plant.status : t(`plantsPage.status.${plant.status}`)}
+                    </div>
                   </div>
                 ))}
               </div>

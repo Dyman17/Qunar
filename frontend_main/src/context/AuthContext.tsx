@@ -9,6 +9,8 @@ export type User = {
   full_name?: string | null;
   phone?: string | null;
   subscription_type?: string;
+  theme_preference?: string | null;
+  language_preference?: string | null;
   is_active: boolean;
   is_superuser: boolean;
   created_at: string;

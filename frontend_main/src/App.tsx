@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
+import { useI18n } from "@/context/I18nContext";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -14,12 +15,14 @@ import Sensors from "./pages/Sensors";
 import AccountSettings from "./pages/AccountSettings";
 import NotFound from "./pages/NotFound";
 import Subscriptions from "./pages/Subscriptions";
+import Checkout from "./pages/Checkout";
 
 const queryClient = new QueryClient();
 
 const RequireAuth = ({ children }: { children: React.ReactNode }) => {
   const { user, loading } = useAuth();
-  if (loading) return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+  const { t } = useI18n();
+  if (loading) return <div className="min-h-screen flex items-center justify-center">{t("common.loading")}</div>;
   if (!user) return <Navigate to="/login" replace />;
   return <>{children}</>;
 };
@@ -31,6 +34,14 @@ const AppRoutes = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/subscriptions" element={<Subscriptions />} />
+      <Route
+        path="/checkout"
+        element={
+          <RequireAuth>
+            <Checkout />
+          </RequireAuth>
+        }
+      />
       <Route
         path="/dashboard"
         element={

@@ -5,9 +5,11 @@ import { Input } from "@/components/ui/input";
 import { Sprout } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
+import { useI18n } from "@/context/I18nContext";
 
 const Login = () => {
   const { login, error, loading } = useAuth();
+  const { t } = useI18n();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [localError, setLocalError] = useState<string | null>(null);
@@ -20,7 +22,7 @@ const Login = () => {
       await login(email, password);
       navigate("/dashboard");
     } catch (err: any) {
-      setLocalError(err.message || "Login failed");
+      setLocalError(err.message || t("loginPage.errorDefault"));
     }
   };
 
@@ -36,22 +38,22 @@ const Login = () => {
             <Sprout className="w-8 h-8" />
             QUNAR
           </Link>
-          <p className="text-muted-foreground mt-2">Login to your smart farm.</p>
+          <p className="text-muted-foreground mt-2">{t("loginPage.title")}</p>
         </div>
         <form className="p-6 rounded-xl bg-card shadow-elevated space-y-4" onSubmit={handleSubmit}>
-          <Input placeholder="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-          <p className="text-xs text-muted-foreground">Введите email, который вы использовали при регистрации.</p>
-          <Input placeholder="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-          <p className="text-xs text-muted-foreground">Пароль должен совпадать с вашим аккаунтом.</p>
+          <Input placeholder={t("loginPage.emailPlaceholder")} type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+          <p className="text-xs text-muted-foreground">{t("loginPage.hintEmail")}</p>
+          <Input placeholder={t("loginPage.passwordPlaceholder")} type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+          <p className="text-xs text-muted-foreground">{t("loginPage.hintPassword")}</p>
           <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? "Logging in..." : "Login"}
+            {loading ? t("loginPage.submitting") : t("loginPage.submit")}
           </Button>
           {(localError || error) && (
             <div className="text-sm text-destructive">{localError || error}</div>
           )}
           <p className="text-center text-sm text-muted-foreground">
-            No account?{" "}
-            <Link to="/register" className="text-primary hover:underline">Create one</Link>
+            {t("loginPage.noAccount")}{" "}
+            <Link to="/register" className="text-primary hover:underline">{t("loginPage.createOne")}</Link>
           </p>
         </form>
       </motion.div>

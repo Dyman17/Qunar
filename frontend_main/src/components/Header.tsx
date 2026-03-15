@@ -1,22 +1,26 @@
 ﻿import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Sprout, Menu, X, LogOut } from "lucide-react";
+import { Sprout, Menu, X, LogOut, Sun, Moon } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
+import { useTheme } from "@/context/ThemeContext";
+import { useI18n } from "@/context/I18nContext";
 
 const navLinks = [
-  { to: "/dashboard", label: "Панель управления" },
-  { to: "/subscriptions", label: "Подписки" },
-  { to: "/farms", label: "Фермы" },
-  { to: "/plants", label: "Растения" },
-  { to: "/sensors", label: "Датчики" },
-  { to: "/settings", label: "Параметры" },
+  { to: "/dashboard", labelKey: "common.dashboard" },
+  { to: "/subscriptions", labelKey: "common.subscriptions" },
+  { to: "/farms", labelKey: "common.farms" },
+  { to: "/plants", labelKey: "common.plants" },
+  { to: "/sensors", labelKey: "common.sensors" },
+  { to: "/settings", labelKey: "common.settings" },
 ];
 
 const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
   const { user, logout } = useAuth();
+  const { theme, toggleTheme } = useTheme();
+  const { language, setLanguage, t } = useI18n();
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b">
@@ -37,25 +41,42 @@ const Header = () => {
                   : "text-muted-foreground hover:text-foreground hover:bg-muted"
               }`}
             >
-              {link.label}
+              {t(link.labelKey)}
             </Link>
           ))}
         </nav>
 
         <div className="hidden md:flex items-center gap-2">
+          <div className="flex items-center gap-1 rounded-full border px-1 py-1 text-xs">
+            {(["en", "ru", "kk"] as const).map((lang) => (
+              <button
+                key={lang}
+                className={`px-2 py-1 rounded-full transition-colors ${
+                  language === lang ? "bg-accent text-foreground" : "text-muted-foreground hover:text-foreground"
+                }`}
+                onClick={() => setLanguage(lang)}
+                aria-label={t("header.language")}
+              >
+                {lang.toUpperCase()}
+              </button>
+            ))}
+          </div>
+          <Button variant="ghost" size="icon" onClick={toggleTheme} aria-label={t("header.themeToggle")}>
+            {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+          </Button>
           {!user && (
             <>
               <Button variant="ghost" asChild>
-                <Link to="/login">Вход</Link>
+                <Link to="/login">{t("common.login")}</Link>
               </Button>
               <Button asChild>
-                <Link to="/register">Регистрация</Link>
+                <Link to="/register">{t("common.register")}</Link>
               </Button>
             </>
           )}
           {user && (
             <Button variant="outline" onClick={logout}>
-              <LogOut className="w-4 h-4 mr-2" /> Выход
+              <LogOut className="w-4 h-4 mr-2" /> {t("common.logout")}
             </Button>
           )}
         </div>
@@ -82,23 +103,41 @@ const Header = () => {
                     : "text-muted-foreground hover:text-foreground"
                 }`}
               >
-                {link.label}
+                {t(link.labelKey)}
               </Link>
             ))}
-            <div className="flex gap-2 mt-3 pt-3 border-t">
+            <div className="flex items-center justify-between gap-2 mt-3 pt-3 border-t">
+              <div className="flex items-center gap-1 rounded-full border px-1 py-1 text-xs">
+                {(["en", "ru", "kk"] as const).map((lang) => (
+                  <button
+                    key={lang}
+                    className={`px-2 py-1 rounded-full transition-colors ${
+                      language === lang ? "bg-accent text-foreground" : "text-muted-foreground hover:text-foreground"
+                    }`}
+                    onClick={() => setLanguage(lang)}
+                  >
+                    {lang.toUpperCase()}
+                  </button>
+                ))}
+              </div>
+              <Button variant="ghost" size="icon" onClick={toggleTheme} aria-label={t("header.themeToggle")}>
+                {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+              </Button>
+            </div>
+            <div className="flex gap-2 mt-3">
               {!user && (
                 <>
                   <Button variant="ghost" asChild className="flex-1">
-                    <Link to="/login" onClick={() => setMobileOpen(false)}>Вход</Link>
+                    <Link to="/login" onClick={() => setMobileOpen(false)}>{t("common.login")}</Link>
                   </Button>
                   <Button asChild className="flex-1">
-                    <Link to="/register" onClick={() => setMobileOpen(false)}>Регистрация</Link>
+                    <Link to="/register" onClick={() => setMobileOpen(false)}>{t("common.register")}</Link>
                   </Button>
                 </>
               )}
               {user && (
                 <Button variant="outline" className="flex-1" onClick={logout}>
-                  Выход
+                  {t("common.logout")}
                 </Button>
               )}
             </div>
