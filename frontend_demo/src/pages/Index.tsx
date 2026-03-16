@@ -290,7 +290,7 @@ const Index = () => {
             >
               {t("landing.hero.badge")}
             </motion.div>
-            <motion.h1 variants={heroItem} className="text-4xl md:text-6xl font-bold text-gradient-primary text-glow">
+            <motion.h1 variants={heroItem} className="text-4xl md:text-6xl font-bold text-gradient-primary text-glow mb-4 leading-[1.1] pb-1">
               {t("landing.hero.title")}
             </motion.h1>
             <motion.p variants={heroItem} className="text-lg text-muted-foreground">

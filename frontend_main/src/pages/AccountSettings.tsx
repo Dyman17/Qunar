@@ -47,7 +47,14 @@ const AccountSettings = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <Input placeholder={t("settingsPage.fullName")} value={fullName} onChange={(e) => setFullName(e.target.value)} />
                 <Input placeholder="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                <Input placeholder={t("settingsPage.phone")} value={phone} onChange={(e) => setPhone(e.target.value)} />
+                <Input
+                  placeholder={t("settingsPage.phone")}
+                  type="tel"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value.replace(/\D/g, ""))}
+                />
               </div>
               <Button onClick={handleSave} disabled={loading}>
                 {loading ? t("settingsPage.saving") : t("settingsPage.save")}

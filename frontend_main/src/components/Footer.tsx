@@ -10,23 +10,30 @@ const Footer = () => {
     en: {
       copy: "Copy email",
       write: "Write email",
+      subject: "QUNAR support request",
+      body: "Hello! I would like to know more about QUNAR.",
       copied: "Email copied",
       copyError: "Could not copy email",
     },
     ru: {
       copy: "Скопировать",
       write: "Написать",
+      subject: "Запрос поддержки QUNAR",
+      body: "Здравствуйте! Хотел(а) бы узнать больше о QUNAR.",
       copied: "Email скопирован",
       copyError: "Не удалось скопировать email",
     },
     kk: {
       copy: "Көшіру",
       write: "Жазу",
+      subject: "QUNAR қолдау сұрауы",
+      body: "Сәлеметсіз бе! QUNAR туралы көбірек білгім келеді.",
       copied: "Email көшірілді",
       copyError: "Email көшіру сәтсіз болды",
     },
   } as const;
   const emailText = emailUi[language] ?? emailUi.en;
+  const gmailComposeUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(contactEmail)}&su=${encodeURIComponent(emailText.subject)}&body=${encodeURIComponent(emailText.body)}`;
 
   const handleCopyEmail = async () => {
     if (!navigator?.clipboard) {
@@ -39,10 +46,6 @@ const Footer = () => {
     } catch {
       toast.error(emailText.copyError);
     }
-  };
-
-  const handleWriteEmail = () => {
-    window.location.href = `mailto:${contactEmail}`;
   };
 
   return (
@@ -65,15 +68,20 @@ const Footer = () => {
               <span className="font-medium text-foreground/80 transition-colors group-hover:text-foreground">
                 {contactEmail}
               </span>
-              <div className="absolute left-0 top-full mt-1 invisible opacity-0 translate-y-1 transition-all pointer-events-none group-hover:pointer-events-auto group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:pointer-events-auto group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0 hover:pointer-events-auto hover:visible hover:opacity-100 hover:translate-y-0 z-10">
+              <div className="absolute left-0 top-full -mt-1 invisible opacity-0 translate-y-1 transition-all pointer-events-none group-hover:pointer-events-auto group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:pointer-events-auto group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0 hover:pointer-events-auto hover:visible hover:opacity-100 hover:translate-y-0 z-10">
                 <div className="flex min-w-[160px] items-center gap-2 rounded-full bg-foreground text-background text-xs px-3 py-1 shadow-card">
                   <button type="button" onClick={handleCopyEmail} className="hover:text-white/90">
                     {emailText.copy}
                   </button>
                   <span className="opacity-40">•</span>
-                  <button type="button" onClick={handleWriteEmail} className="hover:text-white/90">
+                  <a
+                    href={gmailComposeUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="hover:text-white/90"
+                  >
                     {emailText.write}
-                  </button>
+                  </a>
                 </div>
               </div>
             </div>

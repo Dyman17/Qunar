@@ -187,8 +187,18 @@ const Farms = () => {
                 )}
                 <Input placeholder={t("farmsPage.namePlaceholder")} value={name} onChange={(e) => setName(e.target.value)} />
                 <Input placeholder={t("farmsPage.sizePlaceholder")} value={size} onChange={(e) => setSize(e.target.value)} />
-                <Input placeholder={t("farmsPage.locationX")} value={locationX} onChange={(e) => setLocationX(e.target.value)} />
-                <Input placeholder={t("farmsPage.locationY")} value={locationY} onChange={(e) => setLocationY(e.target.value)} />
+                <Input
+                  placeholder={t("farmsPage.locationX")}
+                  value={locationX}
+                  inputMode="decimal"
+                  onChange={(e) => setLocationX(e.target.value.replace(/[^\d.\-]/g, ""))}
+                />
+                <Input
+                  placeholder={t("farmsPage.locationY")}
+                  value={locationY}
+                  inputMode="decimal"
+                  onChange={(e) => setLocationY(e.target.value.replace(/[^\d.\-]/g, ""))}
+                />
                 <Button type="submit" disabled={loading}>{purchaseText.button}</Button>
               </form>
               {message && (
